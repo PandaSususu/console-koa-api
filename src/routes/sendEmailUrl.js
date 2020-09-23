@@ -1,8 +1,8 @@
 import Router from 'koa-router'
-import sendEmail from '../api/sendEmail'
+import loginController from '../api/loginController'
 
 const router = new Router()
 
-router.post('/sendemail', sendEmail)
+router.post('/sendemail', loginController.sendEmail)
 
 export default router

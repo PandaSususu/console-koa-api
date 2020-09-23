@@ -28,12 +28,16 @@ const options = {
 const client = redis.createClient(options)
 
 // 增
-const setValue = (key, value) => {
+const setValue = (key, value, timeout) => {
   if (typeof value === null || value === 'undefined' || value === '') {
     console.log('value必须是有效的')
     return false
   } else if (typeof value === 'string') {
-    return client.set(key, value)
+    if (timeout) {
+      return client.set(key, value, 'EX', timeout) 
+    } else {
+      return client.set(key, value) 
+    }
   } else if (typeof value === 'object') {
     Object.keys(value).forEach((itemKey) => {
       client.hset(key, itemKey, value[itemKey], redis.print)
