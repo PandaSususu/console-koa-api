@@ -1,6 +1,6 @@
 import combineRouters from 'koa-combine-routers'
 
-import publicCodeUrl from './publicCodeUrl'
-import sendEmailUrl from './sendEmailUrl'
+import publicRotes from './publicRouter'
+import loginRotes from './loginRouter'
 
-export default combineRouters(publicCodeUrl, sendEmailUrl)
+export default combineRouters(publicRotes, loginRotes)

@@ -1,4 +1,4 @@
-import User from './test'
+import User from './user'
 
 const userInfo = {
     name: '王五',
@@ -30,5 +30,3 @@ const findMethods = async () => {
     const result = await User.find()
     console.log(result)
 }
-
-deleteMethods()

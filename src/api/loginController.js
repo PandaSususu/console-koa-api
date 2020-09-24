@@ -1,10 +1,13 @@
 import svgCaptcha from 'svg-captcha'
+import jsonwebtoken from 'jsonwebtoken'
 
 import emailConfig from '../config/emailConfig'
 import {
-  setValue,
-  getValue
+  setValue
 } from '../config/redisConfig'
+import config from '../config/index'
+import { checkCode } from '../common/utils'
+import User from '../model/user'
 
 class LoginController {
   /**
@@ -32,7 +35,6 @@ class LoginController {
     let {
       body
     } = ctx.request
-    console.log(body)
     try {
       let result = await emailConfig(body)
       ctx.body = {
@@ -50,7 +52,34 @@ class LoginController {
    * @param {*} ctx 
    */
   async login(ctx) {
+    const body = ctx.request
 
+    // 校验验证码有效性
+    if (checkCode(body.sid, body.code)) {
+      // 校验用户账户
+      let userInfo = await User.findOne({ userName: body.userName })
+      if (userInfo.password === body.password) {
+        // 生成token
+        const token = jsonwebtoken.sign({ _id: 'syngle', exp: Math.floor((Date.now() / 1000) + 60 * 60 * 24) }, config.JWT_SECRET)
+
+        // 登录成功返回token
+        ctx.body = {
+          code: 200,
+          token: token,
+          message: '登陆成功！'
+        }
+      } else {
+        ctx.body = {
+          code: 401,
+          message: '用户名或者密码错误！'
+        }
+      }
+    } else {
+      ctx.body = {
+        code: 401,
+        message: '验证码不正确或者已失效!'
+      }
+    }
   }
 }
 
