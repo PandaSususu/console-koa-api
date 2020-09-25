@@ -19,10 +19,10 @@ class LoginController {
     const captcha = svgCaptcha.create()
     setValue(body.sid, captcha.text, 10 * 60)
     ctx.body = {
-      "code": 200,
-      "data": {
-        "svg": captcha.data,
-        "text": captcha.text,
+      code: 200,
+      data: {
+      svg: captcha.data,
+        text: captcha.text,
       }
     }
   }
@@ -52,31 +52,47 @@ class LoginController {
    * @param {*} ctx 
    */
   async login(ctx) {
-    const body = ctx.request
+    // 获取用户参数
+    let {
+      body
+    } = ctx.request
 
     // 校验验证码有效性
-    if (checkCode(body.sid, body.code)) {
+    const result = await checkCode(body.sid, body.code)
+    if (result) {
       // 校验用户账户
       let userInfo = await User.findOne({ userName: body.userName })
+      if (!userInfo) {
+        ctx.body = {
+          code: 9001,
+          data: {},
+          message: '用户不存在！'
+        }
+        return
+      }
       if (userInfo.password === body.password) {
         // 生成token
         const token = jsonwebtoken.sign({ _id: 'syngle', exp: Math.floor((Date.now() / 1000) + 60 * 60 * 24) }, config.JWT_SECRET)
 
         // 登录成功返回token
         ctx.body = {
-          code: 200,
-          token: token,
+          code: 10000,
+          data: {
+            token: token,
+          },
           message: '登陆成功！'
         }
       } else {
         ctx.body = {
-          code: 401,
-          message: '用户名或者密码错误！'
+          code: 9002,
+          data: {},
+          message: '用户名或密码错误！'
         }
       }
     } else {
       ctx.body = {
-        code: 401,
+        code: 9003,
+        data: {},
         message: '验证码不正确或者已失效!'
       }
     }
