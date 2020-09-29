@@ -28,7 +28,7 @@ class LoginController {
     ctx.body = {
       code: 200,
       data: {
-      svg: captcha.data,
+        svg: captcha.data,
         text: captcha.text,
       }
     }
@@ -68,7 +68,7 @@ class LoginController {
     const result = await checkCode(body.sid, body.code)
     if (result) {
       // 校验用户账户
-      let userInfo = await User.findOne({ email: body.userName })
+      let userInfo = await User.findOne({ email: body.email })
       if (!userInfo) {
         ctx.body = {
           code: 9001,
