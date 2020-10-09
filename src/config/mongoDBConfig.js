@@ -12,6 +12,7 @@ mongoose.connection.on('connection', () => {
 
 // 连接失败
 mongoose.connection.on('error', (err) => {
+    mongoose.connect(config.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     console.log('连接失败' + err)
 })
 

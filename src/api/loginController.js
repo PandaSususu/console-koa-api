@@ -80,12 +80,18 @@ class LoginController {
       if (await bcrypt.compare(body.password, userInfo.password)) {
         // 生成token
         const token = jsonwebtoken.sign({ _id: 'syngle', exp: Math.floor((Date.now() / 1000) + 60 * 60 * 24) }, config.JWT_SECRET)
-
+        const userJson = userInfo.toJSON()
+        console.log(userJson)
+        const filter = ['password', '_id', 'created']
+        filter.map((item) => {
+          delete userJson[item]
+        })
         // 登录成功返回token
         ctx.body = {
           code: 10000,
           data: {
             token: token,
+            userJson
           },
           message: '登陆成功'
         }
@@ -137,6 +143,7 @@ class LoginController {
           email: body.email,
           name: body.name,
           password: body.password,
+          pic: '//t.cn/RCzsdCq',
           created: moment().format('YYYY-MM-DD HH:mm:ss')
         })
         let result = await user.save()

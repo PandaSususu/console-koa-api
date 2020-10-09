@@ -7,6 +7,7 @@ const UserSchema = new Schema({
     'name': String,
     'password': String,
     'created': String,
+    'pic': String
 })
 
 const UseModel = mongoose.model('users', UserSchema)
