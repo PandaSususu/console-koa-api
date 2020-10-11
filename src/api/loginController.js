@@ -22,7 +22,7 @@ class LoginController {
       size: 4,
       color: true,
       noise: Math.floor(Math.random() * 5),
-      height: 38
+      height: 60
     })
     setValue(body.sid, captcha.text, 10 * 60)
     ctx.body = {
@@ -30,7 +30,8 @@ class LoginController {
       data: {
         svg: captcha.data,
         text: captcha.text,
-      }
+      },
+      meessage: '获取验证码成功'
     }
   }
 
@@ -45,9 +46,9 @@ class LoginController {
     try {
       let result = await emailConfig(body)
       ctx.body = {
-        "code": 200,
-        "message": "邮箱发送成功！",
-        "data": result
+        code: 200,
+        message: "邮箱发送成功！",
+        data: result
       }
     } catch (error) {
       console.log(error)
@@ -79,9 +80,8 @@ class LoginController {
       }
       if (await bcrypt.compare(body.password, userInfo.password)) {
         // 生成token
-        const token = jsonwebtoken.sign({ _id: 'syngle', exp: Math.floor((Date.now() / 1000) + 60 * 60 * 24) }, config.JWT_SECRET)
+        const token = jsonwebtoken.sign({ _id: 'syngle' }, config.JWT_SECRET, { expiresIn: '1d' })
         const userJson = userInfo.toJSON()
-        console.log(userJson)
         const filter = ['password', '_id', 'created']
         filter.map((item) => {
           delete userJson[item]
