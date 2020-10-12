@@ -80,7 +80,7 @@ class LoginController {
       }
       if (await bcrypt.compare(body.password, userInfo.password)) {
         // 生成token
-        const token = jsonwebtoken.sign({ _id: 'syngle' }, config.JWT_SECRET, { expiresIn: '1d' })
+        const token = jsonwebtoken.sign({ _id: userInfo._id }, config.JWT_SECRET, { expiresIn: '1d' })
         const userJson = userInfo.toJSON()
         const filter = ['password', '_id', 'created']
         filter.map((item) => {
@@ -143,8 +143,7 @@ class LoginController {
           email: body.email,
           name: body.name,
           password: body.password,
-          pic: '//t.cn/RCzsdCq',
-          created: moment().format('YYYY-MM-DD HH:mm:ss')
+          pic: '//t.cn/RCzsdCq'
         })
         let result = await user.save()
         ctx.body = {
