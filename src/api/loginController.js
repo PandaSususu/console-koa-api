@@ -1,7 +1,6 @@
 import svgCaptcha from 'svg-captcha'
 import jsonwebtoken from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import moment from 'moment'
 
 import emailConfig from '../config/emailConfig'
 import {
@@ -142,8 +141,7 @@ class LoginController {
         let user = new User({
           email: body.email,
           name: body.name,
-          password: body.password,
-          pic: '//t.cn/RCzsdCq'
+          password: body.password
         })
         let result = await user.save()
         ctx.body = {
