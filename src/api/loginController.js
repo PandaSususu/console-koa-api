@@ -1,6 +1,7 @@
 import svgCaptcha from 'svg-captcha'
 import jsonwebtoken from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import moment from 'dayjs'
 
 import emailConfig from '../config/emailConfig'
 import {
@@ -9,6 +10,7 @@ import {
 import config from '../config/index'
 import { checkCode } from '../common/utils'
 import User from '../model/user'
+import SignRecord from '../model/signRecord'
 
 class LoginController {
   /**
@@ -80,11 +82,23 @@ class LoginController {
       if (await bcrypt.compare(body.password, userInfo.password)) {
         // 生成token
         const token = jsonwebtoken.sign({ _id: userInfo._id }, config.JWT_SECRET, { expiresIn: '1d' })
-        const userJson = userInfo.toJSON()
+        // 过滤用户信息敏感字段
+        let userJson = userInfo.toJSON()
         const filter = ['password', '_id', 'created']
         filter.map((item) => {
           delete userJson[item]
         })
+        // 查询用户今天是否已签到
+        const lastSign = await SignRecord.findByUid(userInfo._id)
+        if (lastSign) {
+          if (moment(lastSign.created).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+            userJson.isSign = true
+          } else {
+            userJson.isSign = false
+          }
+        } else {
+          userJson.isSign = false
+        }
         // 登录成功返回token
         ctx.body = {
           code: 10000,

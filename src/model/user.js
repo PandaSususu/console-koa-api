@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     count: { type: Number },
 })
 
-UserSchema.pre('sava', function() {
+UserSchema.pre('save', function(next) {
   this.created = momont().format('YYYY-MM-DD HH:mm:ss')
   this.pic = '//t.cn/RCzsdCq'
   this.favs = 100
@@ -34,7 +34,7 @@ UserSchema.pre('sava', function() {
   next()
 })
 
-UserSchema.static = {
+UserSchema.statics = {
   findByUid(uid) {
     return this.findOne({ _id: uid }, {
       password: 0,

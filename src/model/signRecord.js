@@ -6,8 +6,7 @@ const Schema = mongoose.Schema
 const SignRecordSchema = new Schema({
   uid: { type: String, ref: 'users' },
   created: { type: Date },
-  favs: { type: Number },
-  lastSign: { type: Date }
+  favs: { type: Number }
 })
 
 SignRecordSchema.pre('save', function (next) {
@@ -15,8 +14,9 @@ SignRecordSchema.pre('save', function (next) {
   next()
 })
 
-SignRecordSchema.static = {
-  findByUid: function (uid) {
+SignRecordSchema.statics = {
+  findByUid(uid) {
+    console.log(uid)
     return this.findOne({ uid: uid }).sort({ created: -1 })
   }
 }

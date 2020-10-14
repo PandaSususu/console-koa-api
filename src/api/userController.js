@@ -12,17 +12,20 @@ class SignController {
   async userSign (ctx) {
     // 通过token获取payload中的用户id
     const payload = await getJWTPayload(ctx.header.authorization)
+    // console.log(payload)
 
     // 通过用户id获取用户的最后一次签到
-    const lastSignRecord = SignRecord.findById(payload._id)
+    const lastSignRecord = await SignRecord.findByUid(payload._id)
+    console.log('-------------------------------------------')
+    console.log(lastSignRecord)
     // 获取用户信息
-    const userInfo = await User.findById(payload._id)
+    const userInfo = await User.findByUid(payload._id)
 
     // 返回数据
     let data
     let code
     let message
-    if (lastSignRecord)
+    if (lastSignRecord !== null)
     {
       // 有最后一次签到数据
       // 最后一次签到的时间是否和今天相同？
@@ -40,9 +43,11 @@ class SignController {
         // 如果不同，表示用户今天没签到
         // 判断用户是否在连续签到？
         // 如果当前时间减去一天等于最后一次的签到时间，表示用户在连续签到
-        let count = userInfo.count
+        code = 10000
+        message = '签到成功'
+        let count = userInfo.count + 1
         let favs
-        if (moment(lastSignRecord.lastSign).format('YYYY-MM-DD') === moment().subtract(1, 'days').format('YYYY-MM-DD'))
+        if (moment(lastSignRecord.created).format('YYYY-MM-DD') === moment().subtract(1, 'days').format('YYYY-MM-DD'))
         {
           if (count < 5)
           {
@@ -69,7 +74,7 @@ class SignController {
             $inc: { favs: favs, count: 1 }
           })
           data = {
-            count: count + 1,
+            count: count,
             favs: userInfo.favs + favs
           }
         } else {
@@ -89,31 +94,30 @@ class SignController {
         }
         const newSignRecord = new SignRecord({
           uid: payload._id,
-          favs: favs,
-          lastSign: lastSignRecord.created
+          favs: favs
         })
         await newSignRecord.save()
       }
     } else {
       // 没有最后一次签到数据，则为第一次签到
       // 更新用户信息中的签到次数和积分数
-      User.updateOne(
+      await User.updateOne(
         { _id: payload._id },
         {
-          $set: { count: 1 },
-          $set: { favs: 5 },
+          $set: { favs: 105, count: 1 }
         })
 
       // 保存用户的此次签到记录到签到记录表中
       const firstSignRecord = new SignRecord({
         uid: payload._id,
-        favs: 5,
-        lastSign: moment().format('YYYY-MM-DD HH:mm:ss')
+        favs: 5
       })
       await firstSignRecord.save()
+      code = 10000
+      message = '签到成功'
       data = {
         count: 1,
-        favs: 5
+        favs: 105
       }
     }
     ctx.body = {
