@@ -25,6 +25,7 @@ class SignController {
     let data
     let code
     let message
+    let lastSign
     if (lastSignRecord !== null)
     {
       // 有最后一次签到数据
@@ -75,7 +76,8 @@ class SignController {
           })
           data = {
             count: count,
-            favs: userInfo.favs + favs
+            favs: userInfo.favs + favs,
+            lastSign: lastSignRecord.created
           }
         } else {
           // 表示用户中断了连续签到
@@ -89,7 +91,8 @@ class SignController {
           })
           data = {
             count: count,
-            favs: userInfo.favs + favs
+            favs: userInfo.favs + favs,
+            lastSign: lastSignRecord.created
           }
         }
         const newSignRecord = new SignRecord({
@@ -117,7 +120,8 @@ class SignController {
       message = '签到成功'
       data = {
         count: 1,
-        favs: 105
+        favs: 105,
+        lastSign: moment().format('YYYY-MM-DD HH:mm:ss')
       }
     }
     ctx.body = {
