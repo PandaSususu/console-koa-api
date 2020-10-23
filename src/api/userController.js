@@ -130,6 +130,35 @@ class SignController {
       message: message
     }
   }
+
+  /**
+   * 用户修改基本信息
+   * @param {*} ctx 
+   */
+  async updateInfo(ctx) {
+    // 获取用户请求参数
+    const { body } = ctx.request
+    const payload = await getJWTPayload(ctx.header.authorization)
+    console.log(payload)
+    // 获取用户信息
+    const userInfo = await User.findOne({ _id: payload._id })
+    console.log(userInfo)
+    // 判断用户是否修改了邮箱
+    if (body.email && body.email !== userInfo.email) {
+      // 用户修改了邮箱
+    } else {
+      const fllitArr = ['password', 'email', 'mobile']
+      fllitArr.map((item) => { delete body[item] })
+      const result = await User.update({ _id: payload._id }, body)
+      if (result.n === 1 && result.ok === 1) {
+        ctx.body = {
+          code: 10000,
+          data: {},
+          message: '更新成功'
+        }
+      }
+    }
+  }
 }
 
 export default new SignController()
