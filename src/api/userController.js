@@ -25,6 +25,7 @@ class SignController {
     let data
     let code
     let message
+    let lastSign
     if (lastSignRecord !== null)
     {
       // 有最后一次签到数据
@@ -75,7 +76,8 @@ class SignController {
           })
           data = {
             count: count,
-            favs: userInfo.favs + favs
+            favs: userInfo.favs + favs,
+            lastSign: lastSignRecord.created
           }
         } else {
           // 表示用户中断了连续签到
@@ -89,7 +91,8 @@ class SignController {
           })
           data = {
             count: count,
-            favs: userInfo.favs + favs
+            favs: userInfo.favs + favs,
+            lastSign: lastSignRecord.created
           }
         }
         const newSignRecord = new SignRecord({
@@ -117,13 +120,43 @@ class SignController {
       message = '签到成功'
       data = {
         count: 1,
-        favs: 105
+        favs: 105,
+        lastSign: moment().format('YYYY-MM-DD HH:mm:ss')
       }
     }
     ctx.body = {
       code: code,
       data: data,
       message: message
+    }
+  }
+
+  /**
+   * 用户修改基本信息
+   * @param {*} ctx 
+   */
+  async updateInfo(ctx) {
+    // 获取用户请求参数
+    const { body } = ctx.request
+    const payload = await getJWTPayload(ctx.header.authorization)
+    console.log(payload)
+    // 获取用户信息
+    const userInfo = await User.findOne({ _id: payload._id })
+    console.log(userInfo)
+    // 判断用户是否修改了邮箱
+    if (body.email && body.email !== userInfo.email) {
+      // 用户修改了邮箱
+    } else {
+      const fllitArr = ['password', 'email', 'mobile']
+      fllitArr.map((item) => { delete body[item] })
+      const result = await User.update({ _id: payload._id }, body)
+      if (result.n === 1 && result.ok === 1) {
+        ctx.body = {
+          code: 10000,
+          data: {},
+          message: '更新成功'
+        }
+      }
     }
   }
 }
