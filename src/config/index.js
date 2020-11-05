@@ -1,8 +1,11 @@
-const DB_URL = 'mongodb://syngle:123123@47.112.233.175:27017/testdb'
+const DB_URL = 'mongodb://syngle:123123@8.129.24.7:27017/forum'
 
 const JWT_SECRET = 'h71MDhRWVLQ21ZBc'
 
+const BaseUrl = process.env.NODE_ENV === 'production' ? 'http://8.129.24.7:8080' : 'http://localhost:8080'
+
 export default {
     DB_URL,
-    JWT_SECRET
+    JWT_SECRET,
+    BaseUrl
 }
