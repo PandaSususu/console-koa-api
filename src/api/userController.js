@@ -199,7 +199,7 @@ class SignController {
    * @param {*} ctx 
    */
   async updateEmail(ctx) {
-    const body = ctx.request
+    const body = ctx.request.query
     if (body.key) {
       const token = await getValue(body.key)
       if (!token) {

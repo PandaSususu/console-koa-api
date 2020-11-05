@@ -20,6 +20,6 @@ router.get('/links', indexController.getLinks)
 router.get('/ads', indexController.getAds)
 
 // 用户修改邮箱账号
-router.post('/resetEmail', userController.updateEmail)
+router.get('/resetEmail', userController.updateEmail)
 
 export default router
