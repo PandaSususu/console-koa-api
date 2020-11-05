@@ -3,7 +3,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import moment from 'dayjs'
 
-import emailConfig from '../config/emailConfig'
+import sendEmail from '../config/emailConfig'
 import {
   setValue
 } from '../config/redisConfig'
@@ -40,15 +40,15 @@ class LoginController {
    * 发送邮件服务
    * @param {*} ctx 
    */
-  async sendEmail(ctx) {
+  async forget(ctx) {
     let {
       body
     } = ctx.request
     try {
-      let result = await emailConfig(body)
+      let result = await sendEmail(body)
       ctx.body = {
         code: 200,
-        message: "邮箱发送成功！",
+        message: "邮箱发送成功",
         data: result
       }
     } catch (error) {

@@ -1,7 +1,7 @@
 import redis from 'redis'
 
 const options = {
-  host: '47.112.233.175',
+  host: '8.129.24.7',
   port: 15001,
   password: '123123',
   detect_buffers: true,
@@ -48,6 +48,7 @@ const setValue = (key, value, timeout) => {
 // 查
 const {promisify} = require('util')
 const getAsync = promisify(client.get).bind(client)
+
 const getValue = (key) => {
   return getAsync(key)
 }
@@ -55,6 +56,7 @@ const getValue = (key) => {
 const getHValue = (key) => {
   return promisify(client.hgetall).bind(client)(key)
 }
+
 export {
   client,
   setValue,
