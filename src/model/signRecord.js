@@ -1,5 +1,5 @@
 import mongoose from '../config/mongoDBConfig'
-import momont from 'dayjs'
+import moment from 'dayjs'
 
 const Schema = mongoose.Schema
 
@@ -10,13 +10,12 @@ const SignRecordSchema = new Schema({
 })
 
 SignRecordSchema.pre('save', function (next) {
-  this.created = momont().format('YYYY-MM-DD HH:mm:ss')
+  this.created = moment().format('YYYY-MM-DD HH:mm:ss')
   next()
 })
 
 SignRecordSchema.statics = {
   findByUid(uid) {
-    console.log(uid)
     return this.findOne({ uid: uid }).sort({ created: -1 })
   }
 }

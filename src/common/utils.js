@@ -5,6 +5,7 @@ import config from '../config'
 
 // 获取payload
 const getJWTPayload = async (token) => {
+  console.log(token)
   return jwt.verify(token.split(' ')[1], config.JWT_SECRET)
 }
 

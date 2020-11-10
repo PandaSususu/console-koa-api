@@ -30,7 +30,6 @@ const client = redis.createClient(options)
 // 增
 const setValue = (key, value, timeout) => {
   if (typeof value === null || value === 'undefined' || value === '') {
-    console.log('value必须是有效的')
     return false
   } else if (typeof value === 'string') {
     if (timeout) {

@@ -79,7 +79,7 @@ class SignController {
           data = {
             count: count,
             favs: userInfo.favs + favs,
-            lastSign: lastSignRecord.created,
+            lastSign: moment().format('YYYY-MM-DD HH:mm:ss'),
           };
         } else {
           // 表示用户中断了连续签到
@@ -97,7 +97,7 @@ class SignController {
           data = {
             count: count,
             favs: userInfo.favs + favs,
-            lastSign: lastSignRecord.created,
+            lastSign: moment().format('YYYY-MM-DD HH:mm:ss'),
           };
         }
         const newSignRecord = new SignRecord({
@@ -164,21 +164,32 @@ class SignController {
       const key = uuid();
       setValue(
         key,
-        jwt.sign({ _id: userInfo._id }, config.JWT_SECRET, { expiresIn: '30m' })
+        jwt.sign({ _id: userInfo._id }, config.JWT_SECRET, { expiresIn: '30m' }),
+        30 * 60
       );
-      const result = await sendEmail({
-        type: 'email',
-        code: '',
-        expire: moment().add(30, 'minutes').format('YYYY-MM-DD, HH:mm:ss'),
-        email: userInfo.email,
-        userName: userInfo.name,
-        data: {
-          key,
-          newEmail: body.email,
-          name: body.name
-        },
-      });
-      message = '更新基本资料成功，账号修改需要邮箱验证请点击邮件链接确认修改邮箱账号';
+      try {
+        await sendEmail({
+          type: 'email',
+          code: '',
+          expire: moment().add(30, 'minutes').format('YYYY-MM-DD, HH:mm:ss'),
+          email: userInfo.email,
+          userName: userInfo.name,
+          data: {
+            key,
+            newEmail: body.email,
+            name: body.name,
+          },
+        });
+      } catch (error) {
+        ctx.body = {
+          code: 9001,
+          data: error,
+          message: '信息更新失败！验证邮箱发送不成功，请检查邮箱地址是否有效',
+        };
+        return;
+      }
+      message =
+        '更新基本资料成功，账号修改需要邮箱验证请点击邮件链接确认修改邮箱账号';
     }
     const fllitArr = ['password', 'email', 'mobile'];
     fllitArr.map((item) => {
@@ -196,28 +207,35 @@ class SignController {
 
   /**
    * 修改绑定邮箱账号
-   * @param {*} ctx 
+   * @param {*} ctx
    */
   async updateEmail(ctx) {
-    const body = ctx.request.query
+    const body = ctx.request.query;
     if (body.key) {
-      const token = await getValue(body.key)
+      const token = await getValue(body.key);
       if (!token) {
         ctx.body = {
           code: 9000,
           data: {},
-          message: '重置链接有效时间已过，请重新发起重置请求'
-        }
-        return
+          message: '重置链接有效时间已过，请重新发起重置请求',
+        };
+        return;
       }
-      const payload = getJWTPayload(token)
-      await User.updateOne({ _id: payload._id }, {
-        email: body.newEmail
-      })
-      ctx.body = {
-        code: 10000,
-        data: {},
-        message: '邮箱修改成功'
+      const payload = await getJWTPayload('Bearer ' + token);
+      const result = await User.updateOne(
+        { _id: payload._id },
+        {
+          email: body.newEmail,
+        }
+      );
+      if (result.n === 1 && result.ok === 1) {
+        ctx.body = {
+          code: 10000,
+          data: {
+            email: body.newEmail,
+          },
+          message: '邮箱修改成功',
+        };
       }
     }
   }
