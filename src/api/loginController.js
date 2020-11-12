@@ -40,7 +40,7 @@ class LoginController {
    * @param {*} ctx
    */
   async forget(ctx) {
-    let { body } = ctx.request;
+    const { body } = ctx.request;
     const userInfo = await User.findOne({ email: body.email });
     if (!userInfo) {
       ctx.body = {
@@ -55,7 +55,9 @@ class LoginController {
     if (result) {
       setValue(
         key,
-        jwt.sign({ _id: userInfo._id }, config.JWT_SECRET, { expiresIn: '30m' }),
+        jwt.sign({ _id: userInfo._id }, config.JWT_SECRET, {
+          expiresIn: '30m',
+        }),
         30 * 60
       );
       try {
@@ -66,13 +68,14 @@ class LoginController {
           email: body.email,
           userName: userInfo.name,
           data: {
-            key
+            key,
           },
         });
         ctx.body = {
           code: 10000,
           data: {},
-          message: '验证邮箱发送成功，修改密码需要邮箱验证请点击邮件链接确认重置登录密码',
+          message:
+            '验证邮箱发送成功，修改密码需要邮箱验证请点击邮件链接确认重置登录密码',
         };
       } catch (error) {
         ctx.body = {
@@ -96,7 +99,7 @@ class LoginController {
    */
   async reset(ctx) {
     let { body } = ctx.request;
-    const token = await getValue(body.key)
+    const token = await getValue(body.key);
     if (!token) {
       ctx.body = {
         code: 9000,
@@ -105,20 +108,28 @@ class LoginController {
       };
       return;
     }
-    const payload = await getJWTPayload('Bearer ' + token)
-    body.password = await bcrypt.hash(body.password, 5);
-    console.log(payload)
-    const result = await User.updateOne(
-      { _id: payload._id },
-      {
-        password: body.password,
+    const payload = await getJWTPayload('Bearer ' + token);
+    const userInfo = await User.findOne({ _id: payload._id });
+    if (await bcrypt.compare(body.oldPassword, userInfo.password)) {
+      body.newPassword = await bcrypt.hash(body.newPassword, 5);
+      const result = await User.updateOne(
+        { _id: payload._id },
+        {
+          password: body.newPassword,
+        }
+      );
+      if (result.n === 1 && result.ok === 1) {
+        ctx.body = {
+          code: 10000,
+          data: {},
+          message: '密码修改成功',
+        };
       }
-    );
-    if (result.n === 1 && result.ok === 1) {
+    } else {
       ctx.body = {
-        code: 10000,
+        code: 9001,
         data: {},
-        message: '密码修改成功',
+        message: '旧密码不正确',
       };
     }
   }
@@ -129,7 +140,7 @@ class LoginController {
    */
   async login(ctx) {
     // 获取用户参数
-    let { body } = ctx.request;
+    const { body } = ctx.request;
 
     // 校验验证码有效性
     const result = await checkCode(body.sid, body.code);
@@ -146,11 +157,9 @@ class LoginController {
       }
       if (await bcrypt.compare(body.password, userInfo.password)) {
         // 生成token
-        const token = jwt.sign(
-          { _id: userInfo._id },
-          config.JWT_SECRET,
-          { expiresIn: '1d' }
-        );
+        const token = jwt.sign({ _id: userInfo._id }, config.JWT_SECRET, {
+          expiresIn: '1d',
+        });
         // 过滤用户信息敏感字段
         let userJson = userInfo.toJSON();
         const filter = ['password', '_id', 'created'];

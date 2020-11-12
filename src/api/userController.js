@@ -149,7 +149,7 @@ class SignController {
     const userInfo = await User.findOne({ _id: payload._id });
     let message = '';
     // 判断用户是否修改了邮箱
-    if (body.email !== userInfo.email) {
+    if (body.email && body.email !== userInfo.email) {
       // 用户修改了邮箱
       // 查找数据库中是否存在修改的邮箱账号
       const tempUserEmail = await User.findOne({ email: body.email });

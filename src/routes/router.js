@@ -3,6 +3,7 @@ import combineRouters from 'koa-combine-routers'
 import publicRotes from './publicRouter'
 import loginRotes from './loginRouter'
 import userRoutes from './userRouter'
+import contentRoutes from './contentRouter'
 
 // 加载当前目录下的modules文件夹下所有的js文件
 // const moduleFiles = require.context('./modules', true, /\.js$/)
@@ -14,4 +15,4 @@ import userRoutes from './userRouter'
 //   return items
 // }, [])
 
-export default combineRouters(publicRotes, loginRotes, userRoutes)
+export default combineRouters(publicRotes, loginRotes, userRoutes, contentRoutes)
