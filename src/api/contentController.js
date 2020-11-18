@@ -5,6 +5,7 @@ import moment from 'dayjs'
 import config from '../config'
 import { dirExists, checkCode, getJWTPayload } from '../common/utils'
 import User from '../model/user'
+import Post from '../model/post'
 
 class ContentController {
   /**
@@ -63,14 +64,29 @@ class ContentController {
    */
   async addPost(ctx) {
     const { body } = ctx.request;
-    console.log(body)
     const result = await checkCode(body.sid, body.code);
     if (result) {
       const payload = await getJWTPayload(ctx.header.authorization);
       const userInfo = await User.findByUid(payload._id)
       // 判断用户积分是否大于发帖所需积分
       if (userInfo.favs > body.fav) {
-        
+        await User.updateOne(
+          {
+            _id: payload._id,
+          },
+          {
+            $inc: { favs: -body.fav },
+          }
+        );
+        body.uid = payload._id
+        const newPost = new Post(body)
+        const savaResult = await newPost.save()
+        console.log(savaResult)
+        ctx.body = {
+          code: 10000,
+          data: {},
+          message: '发帖成功'
+        };
       } else {
         ctx.body = {
           code: 9001,
