@@ -3,7 +3,8 @@ import uuid from 'uuid/v4'
 import moment from 'dayjs'
 
 import config from '../config'
-import { dirExists } from '../common/utils'
+import { dirExists, checkCode, getJWTPayload } from '../common/utils'
+import User from '../model/user'
 
 class ContentController {
   /**
@@ -54,6 +55,39 @@ class ContentController {
       },
       message: '图片上传成功',
     };
+  }
+
+  /**
+   * 发表新帖
+   * @param {*}
+   */
+  async addPost(ctx) {
+    const { body } = ctx.request;
+    console.log(body)
+    const result = await checkCode(body.sid, body.code);
+    if (result) {
+      const payload = await getJWTPayload(ctx.header.authorization);
+      const userInfo = await User.findByUid(payload._id)
+      // 判断用户积分是否大于发帖所需积分
+      if (userInfo.favs > body.fav) {
+        
+      } else {
+        ctx.body = {
+          code: 9001,
+          data: {
+            favs: userInfo.favs
+          },
+          message: '积分不足'
+        };
+        return
+      }
+    } else {
+      ctx.body = {
+        code: 9000,
+        data: {},
+        message: '验证码不正确或者已失效'
+      };
+    }
   }
 }
 

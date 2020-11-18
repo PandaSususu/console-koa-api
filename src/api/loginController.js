@@ -20,6 +20,7 @@ class LoginController {
     const body = ctx.request.query;
     const captcha = svgCaptcha.create({
       size: 4,
+      ignoreChars: '0o1i',
       color: true,
       noise: Math.floor(Math.random() * 5),
       height: 60,
@@ -200,7 +201,7 @@ class LoginController {
       ctx.body = {
         code: 9003,
         data: {},
-        message: '验证码不正确或者已失效',
+        message: '验证码不正确或者已失效'
       };
     }
   }
