@@ -5,7 +5,7 @@ import mongoose from '../config/mongoDBConfig'
 const Schema = mongoose.Schema
 
 const PostSchema = new Schema({
-    uid: { type: String },
+    uid: { type: String, ref: 'users' },
     title: { type: String },
     content: { type: String },
     created: { type: Date },
@@ -24,6 +24,21 @@ PostSchema.pre('save', function(next) {
   this.created = momont().format('YYYY-MM-DD HH:mm:ss')
   next()
 })
+
+PostSchema.statics = {
+  getList(option, page, limit, sort) {
+    return this.find(option).sort({ [sort]: -1 }).skip(page * limit).limit(limit).populate({
+      path: 'uid',
+      select: 'name isVip pic _id'
+    })
+  },
+  getPostTid(id) {
+    return this.findOne({ _id: id }).populate({
+      path: 'uid',
+      select: 'name isVip pic _id'
+    })
+  }
+}
 
 const PostModel = mongoose.model('posts', PostSchema)
 

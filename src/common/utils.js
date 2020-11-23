@@ -56,4 +56,13 @@ const dirExists = async (dir) => {
   return false
 }
 
-export { checkCode, getJWTPayload, dirExists }
+// 修改对象名称
+const rename = (obj, oldKey, newKey) => {
+  if (Object.keys(obj).indexOf('uid') !== -1) {
+    obj[newKey] = obj[oldKey]
+    delete obj[oldKey]
+  }
+  return obj
+}
+
+export { checkCode, getJWTPayload, dirExists, rename }

@@ -69,7 +69,7 @@ class ContentController {
       const payload = await getJWTPayload(ctx.header.authorization);
       const userInfo = await User.findByUid(payload._id)
       // 判断用户积分是否大于发帖所需积分
-      if (userInfo.favs > body.fav) {
+      if (userInfo.favs >= body.fav) {
         await User.updateOne(
           {
             _id: payload._id,

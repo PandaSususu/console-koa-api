@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import SignRecord from '../model/signRecord';
 import { getJWTPayload } from '../common/utils';
 import User from '../model/user';
+import Post from '../model/post';
 import sendEmail from '../config/emailConfig';
 import config from '../config';
 import { setValue, getValue } from '../config/redisConfig';
@@ -237,6 +238,20 @@ class SignController {
           message: '邮箱修改成功',
         };
       }
+    }
+  }
+
+  /**
+   * 获取用户帖子列表
+   * @param {*} ctx
+   */
+  async getList(ctx) {
+    const payload = await getJWTPayload(ctx.header.authorization)
+    const data = await Post.find({ uid: payload._id })
+    ctx.body = {
+      code: 10000,
+      data: data,
+      message: '获取列表成功'
     }
   }
 }

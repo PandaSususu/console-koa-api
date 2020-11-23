@@ -20,7 +20,7 @@ class LoginController {
     const body = ctx.request.query;
     const captcha = svgCaptcha.create({
       size: 4,
-      ignoreChars: '0o1i',
+      ignoreChars: '0o1il',
       color: true,
       noise: Math.floor(Math.random() * 5),
       height: 60,

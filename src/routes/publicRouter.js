@@ -22,4 +22,13 @@ router.get('/ads', indexController.getAds)
 // 用户修改邮箱账号
 router.get('/resetEmail', userController.updateEmail)
 
+// 获取置顶帖子
+router.get('/topList', indexController.getTopList)
+
+// 获取帖子列表
+router.get('/list', indexController.getList)
+
+// 获取帖子列表
+router.get('/post/detail', indexController.getPostDetail)
+
 export default router

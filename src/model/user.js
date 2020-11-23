@@ -31,6 +31,13 @@ UserSchema.statics = {
       password: 0,
       name: 0
     })
+  },
+  findBasicInfo(uid) {
+    return this.findOne({ _id: uid }, {
+      name: 1,
+      isVip: 1,
+      pic: 1
+    })
   }
 }
 
