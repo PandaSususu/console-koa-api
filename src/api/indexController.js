@@ -1,4 +1,5 @@
 import Post from '../model/post';
+import Comment from '../model/comment';
 import { rename } from '../common/utils';
 
 class IndexController {
@@ -66,6 +67,20 @@ class IndexController {
       code: 10000,
       data: details,
       message: '获取帖子详情成功'
+    };
+  }
+
+    /**
+   * 获取帖子评论列表
+   * @param {*}
+   */
+  async getComments(ctx) {
+    const body = ctx.query
+    const data = await Comment.getCommentsTid(body.tid)
+    ctx.body = {
+      code: 10000,
+      data: {},
+      message: '获取评论列表成功'
     };
   }
 

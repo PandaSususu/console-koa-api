@@ -15,4 +15,7 @@ router.post('/basic', userController.updateInfo)
 // 获取用户帖子列表
 router.get('/list', userController.getList)
 
+// 用户发表评论
+router.post('/comment', userController.postComment)
+
 export default router

@@ -31,4 +31,7 @@ router.get('/list', indexController.getList)
 // 获取帖子列表
 router.get('/post/detail', indexController.getPostDetail)
 
+// 获取帖子评论列表
+router.get('/post/comments', indexController.getComments)
+
 export default router

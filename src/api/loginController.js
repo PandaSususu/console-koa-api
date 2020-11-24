@@ -163,7 +163,7 @@ class LoginController {
         });
         // 过滤用户信息敏感字段
         let userJson = userInfo.toJSON();
-        const filter = ['password', '_id', 'created'];
+        const filter = ['password', 'created'];
         filter.map((item) => {
           delete userJson[item];
         });
