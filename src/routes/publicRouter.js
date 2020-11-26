@@ -2,6 +2,7 @@ import Router from 'koa-router'
 import loginController from '../api/loginController'
 import indexController from '../api/indexController'
 import userController from '../api/userController'
+import postController from '../api/PostController'
 
 const router = new Router()
 router.prefix('/public')
@@ -23,15 +24,15 @@ router.get('/ads', indexController.getAds)
 router.get('/resetEmail', userController.updateEmail)
 
 // 获取置顶帖子
-router.get('/topList', indexController.getTopList)
+router.get('/topList', postController.getTopList)
 
 // 获取帖子列表
-router.get('/list', indexController.getList)
+router.get('/list', postController.getList)
 
 // 获取帖子列表
-router.get('/post/detail', indexController.getPostDetail)
+router.get('/post/detail', postController.getPostDetail)
 
 // 获取帖子评论列表
-router.get('/post/comments', indexController.getComments)
+router.get('/post/comments', postController.getComments)
 
 export default router

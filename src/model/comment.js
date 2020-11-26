@@ -9,7 +9,7 @@ const Commentchema = new Schema({
     uid: { type: String, ref: 'users' },
     content: { type: String },
     created: { type: Date },
-    hands: { type: Number },
+    hands: { type: Number, default: 0 },
     status: { type: String, default: '1' },
     isRead: { type: String, default: '0' },
     isBest: { type: String, default: '0' }
@@ -21,11 +21,15 @@ Commentchema.pre('save', function(next) {
 })
 
 Commentchema.statics = {
-  getCommentsTid(tid) {
+  getCommentsTid(tid, page, limit) {
     return this.find({ tid }).populate({
       path: 'uid',
-      select: 'name pic isVip _id'
-    })
+      select: 'name pic isVip _id',
+      // match: { status: { $eq: '0' } }
+    }).skip(page * limit).limit(limit)
+  },
+  queryCount(tid) {
+    return this.find({ tid }).countDocuments()
   }
 }
 

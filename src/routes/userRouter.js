@@ -1,6 +1,7 @@
 import Router from 'koa-router'
 
 import userController from '../api/userController'
+import postController from '../api/PostController'
 
 const router = new Router()
 
@@ -13,9 +14,9 @@ router.get('/sign', userController.userSign)
 router.post('/basic', userController.updateInfo)
 
 // 获取用户帖子列表
-router.get('/list', userController.getList)
+router.get('/list', postController.getUserList)
 
 // 用户发表评论
-router.post('/comment', userController.postComment)
+router.post('/comment', postController.postComment)
 
 export default router

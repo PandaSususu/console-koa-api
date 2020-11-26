@@ -3,10 +3,8 @@ import uuid from 'uuid/v4';
 import jwt from 'jsonwebtoken';
 
 import SignRecord from '../model/signRecord';
-import { getJWTPayload, checkCode } from '../common/utils';
+import { getJWTPayload } from '../common/utils';
 import User from '../model/user';
-import Post from '../model/post';
-import Comment from '../model/comment';
 import sendEmail from '../config/emailConfig';
 import config from '../config';
 import { setValue, getValue } from '../config/redisConfig';
@@ -239,49 +237,6 @@ class SignController {
           message: '邮箱修改成功',
         };
       }
-    }
-  }
-
-  /**
-   * 获取用户帖子列表
-   * @param {*} ctx
-   */
-  async getList(ctx) {
-    const payload = await getJWTPayload(ctx.header.authorization)
-    const data = await Post.find({ uid: payload._id })
-    ctx.body = {
-      code: 10000,
-      data: data,
-      message: '获取列表成功'
-    }
-  }
-
-  /**
-   * 用户发表评论信息
-   * @param {*} ctx
-   */
-  async postComment(ctx) {
-    const { body } = ctx.request
-    const result = await checkCode(body.sid, body.code);
-    if (result) {
-      const newComment = new Comment({
-        tid: body.tid,
-        uid: body.uid,
-        content: body.content
-      })
-      const saveResult  = await newComment.save()
-      await Post.updateOne({ _id: body.tid }, { $inc: { answer: 1 } })
-      ctx.body = {
-        code: 10000,
-        data: {},
-        message: '评论发表成功',
-      };
-    } else {
-      ctx.body = {
-        code: 9000,
-        data: {},
-        message: '验证码不正确或者已失效'
-      };
     }
   }
 }
