@@ -26,7 +26,7 @@ Commentchema.statics = {
       path: 'uid',
       select: 'name pic isVip _id',
       // match: { status: { $eq: '0' } }
-    }).skip(page * limit).limit(limit)
+    }).skip(page * limit).limit(limit).sort({ created: -1 })
   },
   queryCount(tid) {
     return this.find({ tid }).countDocuments()

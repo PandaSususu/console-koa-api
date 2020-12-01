@@ -20,7 +20,7 @@ class LoginController {
     const body = ctx.request.query;
     const captcha = svgCaptcha.create({
       size: 4,
-      ignoreChars: '0o1il',
+      ignoreChars: '0o1iIlL',
       color: true,
       noise: Math.floor(Math.random() * 5),
       height: 60,
@@ -46,7 +46,6 @@ class LoginController {
     if (!userInfo) {
       ctx.body = {
         code: 9000,
-        data: {},
         message: '此邮箱未注册',
       };
       return;
@@ -74,7 +73,6 @@ class LoginController {
         });
         ctx.body = {
           code: 10000,
-          data: {},
           message:
             '验证邮箱发送成功，修改密码需要邮箱验证请点击邮件链接确认重置登录密码',
         };
@@ -88,7 +86,6 @@ class LoginController {
     } else {
       ctx.body = {
         code: 9003,
-        data: {},
         message: '验证码不正确或者已失效',
       };
     }
@@ -104,7 +101,6 @@ class LoginController {
     if (!token) {
       ctx.body = {
         code: 9000,
-        data: {},
         message: '重置链接有效时间已过，请重新发起重置请求',
       };
       return;
@@ -122,14 +118,12 @@ class LoginController {
       if (result.n === 1 && result.ok === 1) {
         ctx.body = {
           code: 10000,
-          data: {},
           message: '密码修改成功',
         };
       }
     } else {
       ctx.body = {
         code: 9001,
-        data: {},
         message: '旧密码不正确',
       };
     }
@@ -193,14 +187,12 @@ class LoginController {
       } else {
         ctx.body = {
           code: 9002,
-          data: {},
           message: '用户名或密码错误',
         };
       }
     } else {
       ctx.body = {
         code: 9003,
-        data: {},
         message: '验证码不正确或者已失效'
       };
     }
@@ -250,7 +242,6 @@ class LoginController {
     }
     ctx.body = {
       code: 9001,
-      data: {},
       message: message,
     };
   }

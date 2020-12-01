@@ -2,7 +2,8 @@ import Router from 'koa-router'
 import loginController from '../api/loginController'
 import indexController from '../api/indexController'
 import userController from '../api/userController'
-import postController from '../api/PostController'
+import postController from '../api/postController'
+import commentController from '../api/commentController'
 
 const router = new Router()
 router.prefix('/public')
@@ -33,6 +34,6 @@ router.get('/list', postController.getList)
 router.get('/post/detail', postController.getPostDetail)
 
 // 获取帖子评论列表
-router.get('/post/comments', postController.getComments)
+router.get('/comments', commentController.getComments)
 
 export default router

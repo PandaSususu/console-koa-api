@@ -84,7 +84,6 @@ class ContentController {
         console.log(savaResult)
         ctx.body = {
           code: 10000,
-          data: {},
           message: '发帖成功'
         };
       } else {
@@ -100,7 +99,6 @@ class ContentController {
     } else {
       ctx.body = {
         code: 9000,
-        data: {},
         message: '验证码不正确或者已失效'
       };
     }

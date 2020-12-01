@@ -1,13 +1,17 @@
 import jwt from 'jsonwebtoken'
 import fs from 'fs'
 import path from 'path'
+import User from '../model/user'
 
 import { getValue } from '../config/redisConfig' 
 import config from '../config'
 
 // 获取payload
 const getJWTPayload = async (token) => {
-  return jwt.verify(token.split(' ')[1], config.JWT_SECRET)
+  if (/^Bearer\s+/.test(token)) {
+    return jwt.verify(token.split(' ')[1], config.JWT_SECRET)
+  }
+  return undefined
 }
 
 // 校验验证码
@@ -20,6 +24,22 @@ const checkCode = async (key, value) => {
     }
   }
   return false
+}
+
+// 判断用户是否正常
+const getUserStatus = async (uid) => {
+  const userInfo = await User.findByUid(uid)
+  if (userInfo) {
+    if (userInfo.status === '1') {
+      return { code: 9001, message: '该用户已被禁言' }
+    } else if (userInfo.status === '2') {
+      return { code: 9002, message: '该用户已被冻结' }
+    } else {
+      return { code: 10000, message: '用户正常' }
+    }
+  } else {
+    return { code: 9003, message: '找不到用户信息' }
+  }
 }
 
 // 判断文件夹是否存在
@@ -65,4 +85,4 @@ const rename = (obj, oldKey, newKey) => {
   return obj
 }
 
-export { checkCode, getJWTPayload, dirExists, rename }
+export { checkCode, getJWTPayload, dirExists, rename, getUserStatus }

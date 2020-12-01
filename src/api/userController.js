@@ -11,6 +11,25 @@ import { setValue, getValue } from '../config/redisConfig';
 
 class SignController {
   /**
+   * 获取用户信息
+   * @param {*} ctx
+   */
+  async getUserInfo(ctx) {
+    const body = ctx.query
+    let data = await User.findByUid(body.uid)
+    data = data.toJSON()
+    const lastSign = await SignRecord.findByUid(body.uid)
+    const diff = moment(moment().format('YYYY-MM-DD')).diff(moment(lastSign.created).format('YYYY-MM-DD'), 'day')
+    data.isSign = !(diff > 0)
+    data.lastSign = lastSign.created
+    ctx.body = {
+      code: 10000,
+      data: data,
+      message: '获取用户信息成功',
+    };
+  }
+
+  /**
    * 用户签到
    * @param {*} ctx
    */
@@ -156,7 +175,6 @@ class SignController {
       if (tempUserEmail && tempUserEmail.password) {
         ctx.body = {
           code: 9000,
-          data: {},
           message: '该邮箱已被他人注册',
         };
         return;
@@ -216,7 +234,6 @@ class SignController {
       if (!token) {
         ctx.body = {
           code: 9000,
-          data: {},
           message: '重置链接有效时间已过，请重新发起重置请求',
         };
         return;

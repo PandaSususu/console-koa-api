@@ -28,8 +28,7 @@ UserSchema.pre('save', function(next) {
 UserSchema.statics = {
   findByUid(uid) {
     return this.findOne({ _id: uid }, {
-      password: 0,
-      name: 0
+      password: 0
     })
   },
   findBasicInfo(uid) {
