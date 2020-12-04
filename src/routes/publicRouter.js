@@ -15,6 +15,7 @@ router.get('/tips', indexController.getTips)
 
 // 获取本周热议
 router.get('/topWeek', indexController.getTopWeek)
+
 // 获取友情链接
 router.get('/links', indexController.getLinks)
 
@@ -35,5 +36,11 @@ router.get('/post/detail', postController.getPostDetail)
 
 // 获取帖子评论列表
 router.get('/comments', commentController.getComments)
+
+// 添加链接
+router.post('/add/link', indexController.addLink)
+
+// 添加广告
+router.post('/add/ads', indexController.addAds)
 
 export default router
