@@ -41,10 +41,8 @@ const middleware = compose([
   jwt
 ])
 
-const port = !isDevMode ? 10241 : 3000
-
 app.use(middleware)
 app.use(routes())
-app.listen(port, () => {
-  console.log(`The server is running at:${ port }`)
+app.listen(3000, () => {
+  console.log(`The server is running at:3000`)
 })
