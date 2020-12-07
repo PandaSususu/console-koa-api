@@ -13,6 +13,7 @@ import errorHandle from './common/errorHandle'
 
 const app = new Koa()
 
+const isDevMode = process.env.NODE_ENV === 'production' ? false : true
 
 /**
  * 定义公共路径，不需要jwt鉴权
@@ -39,6 +40,11 @@ const middleware = compose([
   errorHandle,
   jwt
 ])
+
+const port = !isDevMode ? 10241 : 3000
+
 app.use(middleware)
 app.use(routes())
-app.listen(3000)
+app.listen(port, () => {
+  console.log(`The server is running at:${ port }`)
+})
