@@ -17,7 +17,7 @@ RUN npm install  --registry=https://registry.npm.taobao.org
 RUN npm run build
 
 # 暴露端口
-EXPOSE 10241
+EXPOSE 3000
 
 # 挂载数据
 VOLUME [ "/app/public" ]
