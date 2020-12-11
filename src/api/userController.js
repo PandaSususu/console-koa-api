@@ -9,16 +9,16 @@ import sendEmail from '../config/emailConfig';
 import config from '../config';
 import { setValue, getValue } from '../config/redisConfig';
 
-class SignController {
+class UserController {
   /**
    * 获取用户信息
    * @param {*} ctx
    */
   async getUserInfo(ctx) {
-    const body = ctx.query
-    let data = await User.findByUid(body.uid)
+    const payload = await getJWTPayload(ctx.header.authorization)
+    let data = await User.findByUid(payload._id)
     data = data.toJSON()
-    const lastSign = await SignRecord.findByUid(body.uid)
+    const lastSign = await SignRecord.findByUid(payload._id)
     const diff = moment(moment().format('YYYY-MM-DD')).diff(moment(lastSign.created).format('YYYY-MM-DD'), 'day')
     data.isSign = !(diff > 0)
     data.lastSign = lastSign.created
@@ -258,4 +258,4 @@ class SignController {
   }
 }
 
-export default new SignController();
+export default new UserController();
