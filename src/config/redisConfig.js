@@ -1,7 +1,7 @@
 import redis from 'redis'
 
 const options = {
-  host: '8.129.24.7',
+  host: '192.168.1.13',
   port: 15001,
   password: '123123',
   detect_buffers: true,
