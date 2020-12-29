@@ -1,20 +1,54 @@
-import momont from 'dayjs'
+import momont from 'dayjs';
 
-import mogoose from '../config/mongoDBConfig'
+import mogoose from '../config/mongoDBConfig';
 
-const Schema = mogoose.Schema
+const Schema = mogoose.Schema;
 
 const Collectschema = new Schema({
   uid: { type: String, ref: 'users' },
   tid: { type: String, ref: 'posts' },
-  created: { type: Date }
-})
+  tuid: { type: String, ref: 'users' },
+  isRead: { type: String, default: '0' },
+  created: { type: Date },
+});
 
-Collectschema.pre('save', function(next) {
-  this.created = momont().format('YYYY-MM-DD HH:mm:ss')
-  next()
-})
+Collectschema.pre('save', function (next) {
+  this.created = momont().format('YYYY-MM-DD HH:mm:ss');
+  next();
+});
 
-const CollectModel = mogoose.model('collections', Collectschema)
+Collectschema.statics = {
+  getMessages(uid, page, limit) {
+    return this.find({
+      tuid: { $eq: uid },
+      isRead: { $eq: '0' },
+      uid: { $ne: uid },
+    })
+      .populate({
+        path: 'tuid',
+        select: 'name _id',
+      })
+      .populate({
+        path: 'tid',
+        select: 'title _id',
+      })
+      .populate({
+        path: 'uid',
+        select: 'name _id',
+      })
+      .skip(page * limit)
+      .limit(limit)
+      .sort({ created: -1 });
+  },
+  getTotalMsg(uid) {
+    return this.find({
+      tuid: { $eq: uid },
+      isRead: { $eq: '0' },
+      uid: { $ne: uid },
+    }).countDocuments();
+  }
+};
 
-export default CollectModel
+const CollectModel = mogoose.model('collections', Collectschema);
+
+export default CollectModel;

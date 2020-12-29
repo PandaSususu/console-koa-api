@@ -1,7 +1,6 @@
 import Router from 'koa-router'
 
 import userController from '../api/userController'
-import postController from '../api/postController'
 
 const router = new Router()
 
@@ -15,5 +14,8 @@ router.get('/info', userController.getUserInfo)
 
 // 用户修改基本信息
 router.post('/basic', userController.updateInfo)
+
+// 用户消息
+router.get('/messages', userController.getMessages)
 
 export default router

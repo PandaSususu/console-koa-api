@@ -5,6 +5,9 @@ import jwt from 'jsonwebtoken';
 import SignRecord from '../model/signRecord';
 import { getJWTPayload } from '../common/utils';
 import User from '../model/user';
+import Comment from '../model/comment';
+import Collect from '../model/collect';
+import Hands from '../model/hands';
 import sendEmail from '../config/emailConfig';
 import config from '../config';
 import { setValue, getValue } from '../config/redisConfig';
@@ -15,13 +18,16 @@ class UserController {
    * @param {*} ctx
    */
   async getUserInfo(ctx) {
-    const payload = await getJWTPayload(ctx.header.authorization)
-    let data = await User.findByUid(payload._id)
-    data = data.toJSON()
-    const lastSign = await SignRecord.findByUid(payload._id)
-    const diff = moment(moment().format('YYYY-MM-DD')).diff(moment(lastSign.created).format('YYYY-MM-DD'), 'day')
-    data.isSign = !(diff > 0)
-    data.lastSign = lastSign.created
+    const payload = await getJWTPayload(ctx.header.authorization);
+    let data = await User.findByUid(payload._id);
+    data = data.toJSON();
+    const lastSign = await SignRecord.findByUid(payload._id);
+    const diff = moment(moment().format('YYYY-MM-DD')).diff(
+      moment(lastSign.created).format('YYYY-MM-DD'),
+      'day'
+    );
+    data.isSign = !(diff > 0);
+    data.lastSign = lastSign.created;
     ctx.body = {
       code: 10000,
       data: data,
@@ -182,7 +188,9 @@ class UserController {
       const key = uuid();
       setValue(
         key,
-        jwt.sign({ _id: userInfo._id }, config.JWT_SECRET, { expiresIn: '30m' }),
+        jwt.sign({ _id: userInfo._id }, config.JWT_SECRET, {
+          expiresIn: '30m',
+        }),
         30 * 60
       );
       try {
@@ -254,6 +262,46 @@ class UserController {
           message: '邮箱修改成功',
         };
       }
+    }
+  }
+
+  /**
+   * 获取用户消息
+   * @param {*} ctx
+   */
+  async getMessages(ctx) {
+    const body = ctx.request.query;
+    const page = body.page ? parseInt(body.page) : 0;
+    const limit = body.limit ? parseInt(body.limit) : 10;
+    const payload = await getJWTPayload(ctx.header.authorization);
+    let total = 0
+    let data = []
+    if (payload) {
+      switch (body.type) {
+        case 'comment':
+          data = await Comment.getMessages(payload._id, page, limit);
+          total = await Comment.getTotalMsg(payload._id);
+          break;
+        case 'collect':
+          data = await Collect.getMessages(payload._id, page, limit);
+          total = await Collect.getTotalMsg(payload._id);
+          break;
+        case 'hands':
+          data = await Hands.getMessages(payload._id, page, limit);
+          total = await Hands.getTotalMsg(payload._id);
+          break;
+      }
+      ctx.body = {
+        code: 10000,
+        data: data,
+        total,
+        message: '获取消息成功',
+      };
+    } else {
+      ctx.body = {
+        code: 9000,
+        message: '鉴权失败',
+      };
     }
   }
 }

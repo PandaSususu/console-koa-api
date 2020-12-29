@@ -10,8 +10,14 @@ import path from 'path'
 import routes from './routes/router'
 import config from './config/index'
 import errorHandle from './common/errorHandle'
+import WebSocket from './config/webSocket'
 
 const app = new Koa()
+const ws = new WebSocket()
+
+// 初始化websocket服务，并且绑定到全局global上
+ws.init()
+global.ws = ws
 
 const isDevMode = process.env.NODE_ENV === 'production' ? false : true
 
