@@ -36,11 +36,11 @@ Commentchema.statics = {
   queryCount(tid) {
     return this.find({ tid }).countDocuments();
   },
-  getMessages(uid, page, limit) {
+  getMessages(uid, page, limit, isAll) {
     return this.find({
       tuid: uid,
       status: { $eq: '1' },
-      isRead: { $eq: '0' },
+      isRead: isAll ? { $in: ['0', '1'] } : { $eq: '0' },
       uid: { $ne: uid },
     })
       .populate({
@@ -59,13 +59,23 @@ Commentchema.statics = {
       .limit(limit)
       .sort({ created: -1 });
   },
-  getTotalMsg(uid) {
+  getTotalMsg(uid, isAll) {
     return this.find({
       tuid: uid,
       status: { $eq: '1' },
-      isRead: { $eq: '0' },
+      isRead: isAll ? { $in: ['0', '1'] } : { $eq: '0' },
       uid: { $ne: uid },
     }).countDocuments();
+  },
+  setReadMsg(arrId) {
+    return this.updateMany(
+      {
+        _id: { $in: arrId },
+      },
+      {
+        $set: { isRead: '1' },
+      }
+    );
   },
 };
 

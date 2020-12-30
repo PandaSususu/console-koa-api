@@ -9,7 +9,7 @@ class WebSocketServer {
   constructor(config = {}) {
     const defaultConfig = {
       port: 4001,
-      timeInterval: 3 * 1000,
+      timeInterval: 5 * 1000,
       isAuth: true,
     };
 
@@ -30,8 +30,8 @@ class WebSocketServer {
     this.wss.on('connection', (ws) => {
       ws.isAlive = true;
 
-      // // 心跳检测
-      // this.heartbeat()
+      // 心跳检测
+      this.heartbeat()
 
       ws.on('message', (msg) => this.onMessage(ws, msg));
 
@@ -52,7 +52,7 @@ class WebSocketServer {
           ws.send(
             JSON.stringify({
               event: 'message',
-              message: total,
+              message: total
             })
           );
         } else {
@@ -86,11 +86,17 @@ class WebSocketServer {
   }
 
   // 获取用户未读消息
-  async getAllMsg(uid) {
+  async getAllMsg(uid, type = '') {
     const commentTotalMsg = await Comment.getTotalMsg(uid)
     const collectTotalMsg = await Collect.getTotalMsg(uid)
     const handsTotalMsg = await Hands.getTotalMsg(uid)
-    return commentTotalMsg + collectTotalMsg + handsTotalMsg
+    return {
+      comment: commentTotalMsg,
+      collect: collectTotalMsg,
+      hands: handsTotalMsg,
+      total: commentTotalMsg + collectTotalMsg + handsTotalMsg,
+      type
+    }
   }
 
   // 点对点发送消息
@@ -113,8 +119,7 @@ class WebSocketServer {
 
   // 心跳检测
   heartbeat() {
-    clearInterval(this.interval)
-    this.interval = setInterval(() => {
+    setInterval(() => {
       this.wss.clients.forEach((ws) => {
         if (!ws.isAlive) {
           return ws.terminate()

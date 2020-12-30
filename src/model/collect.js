@@ -18,10 +18,10 @@ Collectschema.pre('save', function (next) {
 });
 
 Collectschema.statics = {
-  getMessages(uid, page, limit) {
+  getMessages(uid, page, limit, isAll) {
     return this.find({
       tuid: { $eq: uid },
-      isRead: { $eq: '0' },
+      isRead: isAll ? { $in: ['0', '1'] } : { $eq: '0' },
       uid: { $ne: uid },
     })
       .populate({
@@ -40,13 +40,23 @@ Collectschema.statics = {
       .limit(limit)
       .sort({ created: -1 });
   },
-  getTotalMsg(uid) {
+  getTotalMsg(uid, isAll) {
     return this.find({
       tuid: { $eq: uid },
-      isRead: { $eq: '0' },
+      isRead: isAll ? { $in: ['0', '1'] } : { $eq: '0' },
       uid: { $ne: uid },
     }).countDocuments();
-  }
+  },
+  setReadMsg(arrId) {
+    return this.updateMany(
+      {
+        _id: { $in: arrId },
+      },
+      {
+        $set: { isRead: '1' },
+      }
+    );
+  },
 };
 
 const CollectModel = mogoose.model('collections', Collectschema);

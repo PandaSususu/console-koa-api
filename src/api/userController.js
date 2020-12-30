@@ -276,21 +276,41 @@ class UserController {
     const payload = await getJWTPayload(ctx.header.authorization);
     let total = 0
     let data = []
+    let result
+    let commentsId = []
     if (payload) {
       switch (body.type) {
         case 'comment':
-          data = await Comment.getMessages(payload._id, page, limit);
-          total = await Comment.getTotalMsg(payload._id);
+          data = await Comment.getMessages(payload._id, page, limit, true);
+          total = await Comment.getTotalMsg(payload._id, true);
+          commentsId = data.map(item => {
+            return item._id
+          })
+          result = await Comment.setReadMsg(commentsId);
           break;
         case 'collect':
-          data = await Collect.getMessages(payload._id, page, limit);
-          total = await Collect.getTotalMsg(payload._id);
+          data = await Collect.getMessages(payload._id, page, limit, true);
+          total = await Collect.getTotalMsg(payload._id, true);
+          commentsId = data.map(item => {
+            return item._id
+          })
+          result = await Collect.setReadMsg(commentsId);
           break;
         case 'hands':
-          data = await Hands.getMessages(payload._id, page, limit);
-          total = await Hands.getTotalMsg(payload._id);
+          data = await Hands.getMessages(payload._id, page, limit, true);
+          total = await Hands.getTotalMsg(payload._id, true);
+          commentsId = data.map(item => {
+            return item._id
+          })
+          result = await Hands.setReadMsg(commentsId);
           break;
       }
+      // const msgStr = await global.ws.getAllMsg(payload._id, body.type)
+      // console.log(msgStr)
+      // global.ws.send(payload._id, JSON.stringify({
+      //   event: 'message',
+      //   message: msgStr
+      // }));
       ctx.body = {
         code: 10000,
         data: data,

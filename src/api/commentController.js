@@ -67,7 +67,7 @@ class CommentController {
       const saveResult = await newComment.save();
       await Post.updateOne({ _id: body.tid }, { $inc: { answer: 1 } });
 
-      const total = await global.ws.getAllMsg(postInfo.uid);
+      const total = await global.ws.getAllMsg(postInfo.uid, 'comment');
       // 推送消息给客户端
       if (payload._id !== postInfo.uid) {
         global.ws.send(
@@ -218,7 +218,7 @@ class CommentController {
       { _id: body.cid },
       { $inc: { hands: 1 } }
     );
-    const total = await global.ws.getAllMsg(comment.uid);
+    const total = await global.ws.getAllMsg(comment.uid, 'hands');
     // 推送消息给客户端
     if (payload._id !== comment.uid) {
       global.ws.send(

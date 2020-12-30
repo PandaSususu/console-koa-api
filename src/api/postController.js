@@ -237,7 +237,7 @@ class PostController {
         tuid: postInfo.uid,
       });
       const result = await newCollect.save();
-      const total = await global.ws.getAllMsg(postInfo.uid);
+      const total = await global.ws.getAllMsg(postInfo.uid, 'collect');
       // 推送消息给客户端
       if (payload._id !== postInfo.uid) {
         global.ws.send(

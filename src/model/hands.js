@@ -18,10 +18,10 @@ Handschema.pre('save', function (next) {
 });
 
 Handschema.statics = {
-  getMessages(uid, page, limit) {
+  getMessages(uid, page, limit, isAll) {
     return this.find({
       cuid: { $eq: uid },
-      isRead: { $eq: '0' },
+      isRead: isAll ? { $in: ['0', '1'] } : { $eq: '0' },
       uid: { $ne: uid },
     })
       .populate({
@@ -40,12 +40,22 @@ Handschema.statics = {
       .limit(limit)
       .sort({ created: -1 });
   },
-  getTotalMsg(uid) {
+  getTotalMsg(uid, isAll) {
     return this.find({
       cuid: { $eq: uid },
-      isRead: { $eq: '0' },
+      isRead: isAll ? { $in: ['0', '1'] } : { $eq: '0' },
       uid: { $ne: uid },
     }).countDocuments();
+  },
+  setReadMsg(arrId) {
+    return this.updateMany(
+      {
+        _id: { $in: arrId },
+      },
+      {
+        $set: { isRead: '1' },
+      }
+    );
   },
 };
 
