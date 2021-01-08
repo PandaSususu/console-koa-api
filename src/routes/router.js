@@ -6,6 +6,7 @@ import userRoutes from './userRouter'
 import contentRoutes from './contentRouter'
 import commentRoutes from './commentRouter'
 import postRoutes from './postRouter'
+import tagRoutes from './tagRouter'
 
 // 加载当前目录下的modules文件夹下所有的js文件
 // const moduleFiles = require.context('./modules', true, /\.js$/)
@@ -17,4 +18,4 @@ import postRoutes from './postRouter'
 //   return items
 // }, [])
 
-export default combineRouters(publicRotes, loginRotes, userRoutes, contentRoutes, commentRoutes, postRoutes)
+export default combineRouters(publicRotes, loginRotes, userRoutes, contentRoutes, commentRoutes, postRoutes, tagRoutes)

@@ -26,11 +26,14 @@ PostSchema.pre('save', function(next) {
 })
 
 PostSchema.statics = {
-  getList(option, page, limit, sort) {
-    return this.find(option).sort({ [sort]: -1 }).skip(page * limit).limit(limit).populate({
+  getList(options, page, limit, sort) {
+    return this.find(options).sort({ [sort]: -1 }).skip(page * limit).limit(limit).populate({
       path: 'uid',
       select: 'name isVip pic _id'
     })
+  },
+  getListCount(options) {
+    return this.find(options).countDocuments()
   },
   getPostTid(id) {
     return this.findOne({ _id: id }).populate({

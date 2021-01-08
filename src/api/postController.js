@@ -97,6 +97,29 @@ class PostController {
   }
 
   /**
+   * 管理员更新帖子
+   * @param {*}
+   */
+  async adminUpdatePost(ctx) {
+    const { body } = ctx.request;
+    const updateResult = await Post.updateOne(
+      { _id: body._id },
+      body
+    );
+    if (updateResult.ok === 1) {
+      ctx.body = {
+        code: 10000,
+        message: '更新帖子成功',
+      };
+    } else {
+      ctx.body = {
+        code: 9000,
+        message: '更新帖子失败，请重试',
+      };
+    }
+  }
+
+  /**
    * 获取置顶帖子
    * @param {*}
    */
@@ -138,12 +161,14 @@ class PostController {
       options.tags = { $elemMatch: { name: body.tag } };
     }
     const data = await Post.getList(options, page, limit, sort);
+    const total = await Post.getListCount(options);
     const list = data.map((item) => {
       return rename(item.toJSON(), 'uid', 'user');
     });
     ctx.body = {
       code: 10000,
       data: list,
+      total,
       message: '获取帖子列表成功',
     };
   }
@@ -268,6 +293,26 @@ class PostController {
           message: '取消收藏失败，请重试',
         };
       }
+    }
+  }
+
+  /**
+   * 删除帖子
+   * @param {*}
+   */
+  async deletePost(ctx) {
+    const body = ctx.query;
+    const result = await Post.deleteOne({ _id: body.id });
+    if (result.ok === 1) {
+      ctx.body = {
+        code: 10000,
+        message: '删除成功',
+      };
+    } else {
+      ctx.body = {
+        code: 9000,
+        message: '删除失败，请重试',
+      };
     }
   }
 }
