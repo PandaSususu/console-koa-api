@@ -15,9 +15,10 @@ const UserSchema = new Schema({
     mobile: { type: String, default: '' },
     status: { type: String, default: '0' },
     regmark: { type: String, default: '' },
-    location: { type: String, default: '' },
+    location: { type: Array, default: () => [] },
     isVip: { type: String, default: '0' },
     count: { type: Number, default: 0 },
+    access: { type: Array, default: ['user'] },
 })
 
 UserSchema.pre('save', function(next) {

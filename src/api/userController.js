@@ -274,34 +274,34 @@ class UserController {
     const page = body.page ? parseInt(body.page) : 0;
     const limit = body.limit ? parseInt(body.limit) : 10;
     const payload = await getJWTPayload(ctx.header.authorization);
-    let total = 0
-    let data = []
-    let result
-    let commentsId = []
+    let total = 0;
+    let data = [];
+    let result;
+    let commentsId = [];
     if (payload) {
       switch (body.type) {
         case 'comment':
           data = await Comment.getMessages(payload._id, page, limit, true);
           total = await Comment.getTotalMsg(payload._id, true);
-          commentsId = data.map(item => {
-            return item._id
-          })
+          commentsId = data.map((item) => {
+            return item._id;
+          });
           result = await Comment.setReadMsg(commentsId);
           break;
         case 'collect':
           data = await Collect.getMessages(payload._id, page, limit, true);
           total = await Collect.getTotalMsg(payload._id, true);
-          commentsId = data.map(item => {
-            return item._id
-          })
+          commentsId = data.map((item) => {
+            return item._id;
+          });
           result = await Collect.setReadMsg(commentsId);
           break;
         case 'hands':
           data = await Hands.getMessages(payload._id, page, limit, true);
           total = await Hands.getTotalMsg(payload._id, true);
-          commentsId = data.map(item => {
-            return item._id
-          })
+          commentsId = data.map((item) => {
+            return item._id;
+          });
           result = await Hands.setReadMsg(commentsId);
           break;
       }
@@ -321,6 +321,122 @@ class UserController {
       ctx.body = {
         code: 9000,
         message: '鉴权失败',
+      };
+    }
+  }
+
+  /**
+   * 获取用户列表
+   * @param {*} ctx
+   */
+  async getUsers(ctx) {
+    const body = ctx.query;
+    const page = body.page ? parseInt(body.page) : 0;
+    const limit = body.limit ? parseInt(body.limit) : 10;
+    const data = await User.find()
+      .skip(page * limit)
+      .limit(limit)
+      .sort({ created: -1 });
+    const total = await User.find().countDocuments();
+    ctx.body = {
+      code: 10000,
+      data,
+      total,
+      message: '获取列表成功',
+    };
+  }
+
+  /**
+   * 删除用户
+   * @param {*} ctx
+   */
+  async deleteUser(ctx) {
+    const body = ctx.query;
+    const findUser = await User.findOne({ _id: body.id });
+    if (findUser) {
+      const result = await User.deleteOne({ _id: body.id });
+      if (result.ok === 1) {
+        ctx.body = {
+          code: 10000,
+          message: '删除成功',
+        };
+      }
+    } else {
+      ctx.body = {
+        code: 9000,
+        message: '用户不存在，删除失败',
+      };
+    }
+  }
+
+  /**
+   * 管理员更新用户信息
+   * @param {*} ctx
+   */
+  async adminUpdateInfo(ctx) {
+    const { body } = ctx.request
+    const userInfo = await User.findById(body._id)
+    if (userInfo) {
+      const result = await User.updateOne({ _id: body._id }, body)
+      if (result.ok === 1) {
+        ctx.body = {
+          code: 10000,
+          message: '信息更新成功',
+        };
+      } else {
+        ctx.body = {
+          code: 9001,
+          message: '更新失败，请重试',
+        };
+      }
+    } else {
+      ctx.body = {
+        code: 9000,
+        message: '更新失败，查找不到对应用户',
+      };
+    }
+  }
+
+  /**
+   * 校验用户名是否存在
+   * @param {*} ctx
+   */
+  async checkUserName(ctx) {
+    const body = ctx.query;
+    const findUser = await User.findOne({ name: body.name });
+    if (findUser) {
+      ctx.body = {
+        code: 10000,
+        data: true,
+        message: '用户名存在',
+      };
+    } else {
+      ctx.body = {
+        code: 10000,
+        data: false,
+        message: '用户名不存在',
+      };
+    }
+  }
+
+  /**
+   * 校验邮箱是否存在
+   * @param {*} ctx
+   */
+  async checkUserEmail(ctx) {
+    const body = ctx.query;
+    const findUser = await User.findOne({ email: body.email });
+    if (findUser) {
+      ctx.body = {
+        code: 10000,
+        data: true,
+        message: '邮箱存在',
+      };
+    } else {
+      ctx.body = {
+        code: 10000,
+        data: false,
+        message: '邮箱不存在',
       };
     }
   }
