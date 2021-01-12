@@ -1,6 +1,7 @@
 import moment from 'dayjs';
 import uuid from 'uuid/v4';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 import SignRecord from '../model/signRecord';
 import { getJWTPayload } from '../common/utils';
@@ -8,6 +9,7 @@ import User from '../model/user';
 import Comment from '../model/comment';
 import Collect from '../model/collect';
 import Hands from '../model/hands';
+import Post from '../model/post';
 import sendEmail from '../config/emailConfig';
 import config from '../config';
 import { setValue, getValue } from '../config/redisConfig';
@@ -137,7 +139,7 @@ class UserController {
       await User.updateOne(
         { _id: payload._id },
         {
-          $set: { favs: 105, count: 1 },
+          $inc: { favs: 5, count: 1 },
         }
       );
 
@@ -157,7 +159,7 @@ class UserController {
     }
     ctx.body = {
       code: code,
-      data: data,
+      data,
       message: message,
     };
   }
@@ -347,24 +349,23 @@ class UserController {
   }
 
   /**
-   * 删除用户
+   * 管理员删除用户
    * @param {*} ctx
    */
   async deleteUser(ctx) {
-    const body = ctx.query;
-    const findUser = await User.findOne({ _id: body.id });
-    if (findUser) {
-      const result = await User.deleteOne({ _id: body.id });
-      if (result.ok === 1) {
-        ctx.body = {
-          code: 10000,
-          message: '删除成功',
-        };
-      }
+    const { body } = ctx.request;
+    // const findUser = await User.findOne({ _id: body.id });
+    const result1 = await User.deleteMany({ _id: { $in: body.ids } });
+    const result2 = await Post.deleteMany({ uid: { $in: body.ids } });
+    if (result1.ok === 1 && result2.ok === 1) {
+      ctx.body = {
+        code: 10000,
+        message: '删除成功',
+      };
     } else {
       ctx.body = {
         code: 9000,
-        message: '用户不存在，删除失败',
+        message: '删除失败，请重试',
       };
     }
   }
@@ -374,25 +375,21 @@ class UserController {
    * @param {*} ctx
    */
   async adminUpdateInfo(ctx) {
-    const { body } = ctx.request
-    const userInfo = await User.findById(body._id)
-    if (userInfo) {
-      const result = await User.updateOne({ _id: body._id }, body)
-      if (result.ok === 1) {
-        ctx.body = {
-          code: 10000,
-          message: '信息更新成功',
-        };
-      } else {
-        ctx.body = {
-          code: 9001,
-          message: '更新失败，请重试',
-        };
-      }
+    const { body } = ctx.request;
+    // const userInfo = await User.findById(body._id);
+    const result = await User.updateMany(
+      { _id: { $in: body.ids } },
+      body.options
+    );
+    if (result.ok === 1) {
+      ctx.body = {
+        code: 10000,
+        message: '信息更新成功',
+      };
     } else {
       ctx.body = {
         code: 9000,
-        message: '更新失败，查找不到对应用户',
+        message: '更新失败，请重试',
       };
     }
   }
@@ -439,6 +436,21 @@ class UserController {
         message: '邮箱不存在',
       };
     }
+  }
+
+  /**
+   * 管理员添加用户
+   * @param {*} ctx
+   */
+  async addUser(ctx) {
+    const { body } = ctx.request;
+    body.password = await bcrypt.hash(body.password, 5);
+    const newUser = new User(body);
+    await newUser.save();
+    ctx.body = {
+      code: 10000,
+      message: '添加成功',
+    };
   }
 }
 

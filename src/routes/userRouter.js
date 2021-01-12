@@ -22,7 +22,7 @@ router.get('/messages', userController.getMessages)
 router.get('/list', userController.getUsers)
 
 // 删除用户
-router.get('/delete', userController.deleteUser)
+router.post('/delete', userController.deleteUser)
 
 // 管理员更新用户信息
 router.post('/admin-update', userController.adminUpdateInfo)
@@ -32,5 +32,8 @@ router.get('/check-name', userController.checkUserName)
 
 // 校验邮箱是否存在
 router.get('/check-email', userController.checkUserEmail)
+
+// 管理员新增用户
+router.post('/add', userController.addUser)
 
 export default router

@@ -53,7 +53,7 @@ class IndexController {
    */
   getAds(ctx) {
     ctx.body = {
-      code: 200,
+      code: 10000,
       data: {},
       message: '获取推荐课程成功',
     };

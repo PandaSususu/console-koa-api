@@ -17,7 +17,7 @@ class PostController {
       const userInfo = await User.findByUid(payload._id);
       // 判断用户积分是否大于发帖所需积分
       if (userInfo.favs >= body.fav) {
-        await User.updateOne(
+        const result = await User.updateOne(
           {
             _id: payload._id,
           },
@@ -25,14 +25,21 @@ class PostController {
             $inc: { favs: -body.fav },
           }
         );
-        body.uid = payload._id;
-        const newPost = new Post(body);
-        const savaResult = await newPost.save();
-        ctx.body = {
-          code: 10000,
-          data: savaResult._id,
-          message: '发帖成功',
-        };
+        if (result.ok === 1) {
+          body.uid = payload._id;
+          const newPost = new Post(body);
+          const post = await newPost.save();
+          ctx.body = {
+            code: 10000,
+            data: post._id,
+            message: '发帖成功',
+          };
+        } else {
+          ctx.body = {
+            code: 9002,
+            message: '发表失败，请重试',
+          };
+        }
       } else {
         ctx.body = {
           code: 9001,
@@ -102,10 +109,7 @@ class PostController {
    */
   async adminUpdatePost(ctx) {
     const { body } = ctx.request;
-    const updateResult = await Post.updateOne(
-      { _id: body._id },
-      body
-    );
+    const updateResult = await Post.updateOne({ _id: body._id }, body);
     if (updateResult.ok === 1) {
       ctx.body = {
         code: 10000,
