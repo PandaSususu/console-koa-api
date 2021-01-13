@@ -332,14 +332,12 @@ class UserController {
    * @param {*} ctx
    */
   async getUsers(ctx) {
-    const body = ctx.query;
+    const { body } = ctx.request;
     const page = body.page ? parseInt(body.page) : 0;
     const limit = body.limit ? parseInt(body.limit) : 10;
-    const data = await User.find()
-      .skip(page * limit)
-      .limit(limit)
-      .sort({ created: -1 });
-    const total = await User.find().countDocuments();
+    const options = body.options ? body.options : {}
+    const data = await User.getList(options, page, limit)
+    const total = await User.getListCount(body.options)
     ctx.body = {
       code: 10000,
       data,

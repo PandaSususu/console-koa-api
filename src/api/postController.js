@@ -319,6 +319,28 @@ class PostController {
       };
     }
   }
+
+  /**
+   * 管理员获取帖子列表
+   * @param {*}
+   */
+  async adminGetList(ctx) {
+    const { body } = ctx.request;
+    const page = body.page ? parseInt(body.page) : 0;
+    const limit = body.limit ? parseInt(body.limit) : 10;
+    const options = body.options ? body.options : {};
+    const data = await Post.adiminGetList(options, page, limit);
+    const list = data.map((item) => {
+      return rename(item.toJSON(), 'uid', 'user');
+    });
+    const total = await Post.adiminGetListCount(options);
+    ctx.body = {
+      code: 10000,
+      data: list,
+      total,
+      message: '获取列表成功',
+    };
+  }
 }
 
 export default new PostController();

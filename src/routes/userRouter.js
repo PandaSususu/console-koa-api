@@ -19,7 +19,7 @@ router.post('/basic', userController.updateInfo)
 router.get('/messages', userController.getMessages)
 
 // 获取用户列表
-router.get('/list', userController.getUsers)
+router.post('/list', userController.getUsers)
 
 // 删除用户
 router.post('/delete', userController.deleteUser)

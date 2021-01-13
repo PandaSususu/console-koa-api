@@ -27,4 +27,7 @@ router.get('/collect', postController.collectPost)
 // 删除帖子
 router.get('/delete', postController.deletePost)
 
+// 管理员获取帖子
+router.post('/post-list', postController.adminGetList)
+
 export default router
