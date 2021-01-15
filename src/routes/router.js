@@ -1,12 +1,13 @@
-import combineRouters from 'koa-combine-routers'
+import combineRouters from 'koa-combine-routers';
 
-import publicRotes from './publicRouter'
-import loginRotes from './loginRouter'
-import userRoutes from './userRouter'
-import contentRoutes from './contentRouter'
-import commentRoutes from './commentRouter'
-import postRoutes from './postRouter'
-import tagRoutes from './tagRouter'
+import publicRotes from './publicRouter';
+import loginRotes from './loginRouter';
+import userRoutes from './userRouter';
+import contentRoutes from './contentRouter';
+import commentRoutes from './commentRouter';
+import postRoutes from './postRouter';
+import tagRoutes from './tagRouter';
+import adminRoutes from './adminRouter';
 
 // 加载当前目录下的modules文件夹下所有的js文件
 // const moduleFiles = require.context('./modules', true, /\.js$/)
@@ -18,4 +19,13 @@ import tagRoutes from './tagRouter'
 //   return items
 // }, [])
 
-export default combineRouters(publicRotes, loginRotes, userRoutes, contentRoutes, commentRoutes, postRoutes, tagRoutes)
+export default combineRouters(
+  publicRotes,
+  loginRotes,
+  userRoutes,
+  contentRoutes,
+  commentRoutes,
+  postRoutes,
+  tagRoutes,
+  adminRoutes
+);

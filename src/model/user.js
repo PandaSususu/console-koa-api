@@ -22,7 +22,7 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre('save', function (next) {
-  this.created = momont().format('YYYY-MM-DD HH:mm:ss');
+  this.created = momont();
   next();
 });
 
