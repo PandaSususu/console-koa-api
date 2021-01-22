@@ -24,12 +24,14 @@ class UserController {
     let data = await User.findByUid(payload._id);
     data = data.toJSON();
     const lastSign = await SignRecord.findByUid(payload._id);
-    const diff = moment(moment().format('YYYY-MM-DD')).diff(
-      moment(lastSign.created).format('YYYY-MM-DD'),
-      'day'
-    );
-    data.isSign = !(diff > 0);
-    data.lastSign = lastSign.created;
+    if (lastSign) {
+      const diff = moment(moment().format('YYYY-MM-DD')).diff(
+        moment(lastSign.created).format('YYYY-MM-DD'),
+        'day'
+      );
+      data.isSign = !(diff > 0);
+      data.lastSign = lastSign.created;
+    }
     ctx.body = {
       code: 10000,
       data: data,
@@ -335,9 +337,9 @@ class UserController {
     const { body } = ctx.request;
     const page = body.page ? parseInt(body.page) : 0;
     const limit = body.limit ? parseInt(body.limit) : 10;
-    const options = body.options ? body.options : {}
-    const data = await User.getList(options, page, limit)
-    const total = await User.getListCount(body.options)
+    const options = body.options ? body.options : {};
+    const data = await User.getList(options, page, limit);
+    const total = await User.getListCount(body.options);
     ctx.body = {
       code: 10000,
       data,

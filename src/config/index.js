@@ -8,9 +8,12 @@ const BaseUrl = process.env.NODE_ENV === 'production' ? 'http://47.115.56.50:102
 
 const uploadPath = process.env.NODE_ENV === 'production' ? '/app/public' : path.join(path.resolve(__dirname), '../../public')
 
+const isDevMode = process.env.NODE_ENV !== 'production'
+
 export default {
     DB_URL,
     JWT_SECRET,
     BaseUrl,
-    uploadPath
+    uploadPath,
+    isDevMode
 }

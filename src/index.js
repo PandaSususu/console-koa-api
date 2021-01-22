@@ -8,9 +8,10 @@ import statics from 'koa-static'
 import path from 'path'
 
 import routes from './routes/router'
-import config from './config/index'
+import config from './config'
 import errorHandle from './common/errorHandle'
 import WebSocket from './config/webSocket'
+import log4js from './config/log4'
 
 const app = new Koa()
 const ws = new WebSocket()
@@ -44,7 +45,12 @@ const middleware = compose([
   bodyParser(),
   cors(),
   errorHandle,
-  jwt
+  jwt,
+  config.isDevMode ? log4js.koaLogger(log4js.getLogger('http'), {
+    level: 'auto'
+  }) : log4js.koaLogger(log4js.getLogger('access'), {
+    level: 'auto'
+  })
 ])
 
 app.use(middleware)
