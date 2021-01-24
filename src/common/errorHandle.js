@@ -1,13 +1,14 @@
 import log4js from '../config/log4'
-import ErrorRecord from '../model/ErrorRecord'
-import User from '../model/User'
+import ErrorRecord from '../model/errorRecord'
+import User from '../model/user'
 import config from '../config/index'
+import { getJWTPayload } from './utils'
 
 const logger = log4js.getLogger('error')
 export default async (ctx, next) => {
   try {
     await next()
-    if (ctx.status !== 200 && config.isDevMode) {
+    if (ctx.status !== 200) {
       const codeMessage = {
         // 200: '服务器成功返回请求的数据。',
         201: '新建或修改数据成功。',
@@ -37,30 +38,31 @@ export default async (ctx, next) => {
     ${err.stack}
     `)
     let user = ''
-    if (ctx._id) {
-      user = await User.findOne({ _id: ctx._id })
+    if (ctx.header.authorization) {
+      const payload = await getJWTPayload(ctx.header.authorization)
+      user = await User.findOne({ _id: payload._id })
     }
     // 保存错误日志到数据库
     await ErrorRecord.create({
       message: err.message,
-      code: ctx.response.status,
+      code: err.code || 401,
       method: ctx.method,
       path: ctx.path,
       param: ctx.method === 'GET' ? ctx.query : ctx.request.body,
-      username: user.username,
+      username: user.name,
       stack: err.stack
     })
     if (err.status === 401) {
       ctx.status = 401
       ctx.body = {
         code: 401,
-        msg: 'Protected resource, use Authorization header to get access\n'
+        message: '用户没有权限（令牌、用户名、密码错误）。'
       }
     } else {
-      ctx.status = err.status || 500
+      ctx.status = err.code || 500
       ctx.body = Object.assign({
-        code: 500,
-        msg: err.message
+        code: ctx.status,
+        message: err.message
       }, process.env.NODE_ENV === 'development'
         ? { stack: err.stack } : {})
     }

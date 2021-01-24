@@ -6,6 +6,7 @@ import User from '../model/user';
 import Post from '../model/post';
 import Sign from '../model/signRecord';
 import Comment from '../model/comment';
+import ErrorRecord from '../model/errorRecord'
 
 class AdminController {
   /**
@@ -22,27 +23,44 @@ class AdminController {
     const totalUser = await User.find().countDocuments();
     // 本周新增用户
     const weekNewUser = await User.find({
-      created: { $gte: weekStart, $lt: weekEnd },
+      created: {
+        $gte: weekStart,
+        $lt: weekEnd
+      },
     }).countDocuments();
     // 总发帖数
     const totalPost = await Post.find().countDocuments();
     // 本周发帖数
     const weekNewPost = await Post.find({
-      created: { $gte: weekStart, $lt: weekEnd },
+      created: {
+        $gte: weekStart,
+        $lt: weekEnd
+      },
     }).countDocuments();
     // 本周评论数
     const weekNewComment = await Comment.find({
-      created: { $gte: weekStart, $lt: weekEnd },
+      created: {
+        $gte: weekStart,
+        $lt: weekEnd
+      },
     }).countDocuments();
     // 本周签到
     const weekNewSign = await Sign.find({
-      created: { $gte: weekStart, $lt: weekEnd },
+      created: {
+        $gte: weekStart,
+        $lt: weekEnd
+      },
     }).countDocuments();
 
     // 帖子类型分组统计
-    const postClassify = await Post.aggregate([
-      { $group: { _id: '$catalog', count: { $sum: 1 } } },
-    ]);
+    const postClassify = await Post.aggregate([{
+      $group: {
+        _id: '$catalog',
+        count: {
+          $sum: 1
+        }
+      }
+    }, ]);
     let postClassifyObj = {};
     postClassify.forEach((item) => {
       Reflect.set(postClassifyObj, item['_id'], item.count);
@@ -52,19 +70,36 @@ class AdminController {
     const thisDay = moment().date(1).hour(0).minute(0).second(0);
     const startMonth = moment(thisDay).subtract(5, 'M').format();
     const endMonth = moment(thisDay).add(1, 'M').format();
-    const first6MonthsData = await Post.aggregate([
-      {
+    const first6MonthsData = await Post.aggregate([{
         $match: {
-          created: { $gte: new Date(startMonth), $lt: new Date(endMonth) },
+          created: {
+            $gte: new Date(startMonth),
+            $lt: new Date(endMonth)
+          },
         },
       },
       {
         $project: {
-          month: { $substr: [{ $add: ['$created', 28800000] }, 0, 7] },
+          month: {
+            $substr: [{
+              $add: ['$created', 28800000]
+            }, 0, 7]
+          },
         },
       },
-      { $group: { _id: '$month', count: { $sum: 1 } } },
-      { $sort: { _id: 1 } },
+      {
+        $group: {
+          _id: '$month',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          _id: 1
+        }
+      },
     ]);
     let first6MonthsObj = {};
     first6MonthsData.forEach((item) => {
@@ -75,19 +110,36 @@ class AdminController {
     const startDay = moment(day).subtract(6, 'day').format();
     const endDay = moment(day).add(1, 'day').format();
     const getWeekData = (model) => {
-      return model.aggregate([
-        {
+      return model.aggregate([{
           $match: {
-            created: { $gte: new Date(startDay), $lt: new Date(endDay) },
+            created: {
+              $gte: new Date(startDay),
+              $lt: new Date(endDay)
+            },
           },
         },
         {
           $project: {
-            day: { $substr: [{ $add: ['$created', 28800000] }, 0, 10] }, //时区数据校准，8小时换算成毫秒数为8*60*60*1000=288000后分割成YYYY-MM-DD日期格式便于分组
+            day: {
+              $substr: [{
+                $add: ['$created', 28800000]
+              }, 0, 10]
+            }, //时区数据校准，8小时换算成毫秒数为8*60*60*1000=288000后分割成YYYY-MM-DD日期格式便于分组
           },
         },
-        { $group: { _id: '$day', count: { $sum: 1 } } },
-        { $sort: { _id: 1 } },
+        {
+          $group: {
+            _id: '$day',
+            count: {
+              $sum: 1
+            }
+          }
+        },
+        {
+          $sort: {
+            _id: 1
+          }
+        },
       ]);
     };
     let countData = {};
@@ -135,6 +187,50 @@ class AdminController {
       data,
       message: '统计数据获取成功',
     };
+  }
+
+  /**
+   * 获取错误消息
+   * @param {*} ctx
+   */
+  async getErrors(ctx) {
+    const body = ctx.query
+    const page = parseInt(body.page) ? parseInt(body.page) : 0
+    const limit = parseInt(body.limit) ? parseInt(body.limit) : 10
+    const data = await ErrorRecord.find().skip(page * limit).limit(limit).sort({
+      created: -1
+    })
+    const total = await ErrorRecord.find().countDocuments()
+    ctx.body = {
+      code: 10000,
+      data,
+      total,
+      message: '获取错误消息成功',
+    };
+  }
+
+  /**
+   * 删除错误消息
+   * @param {*} ctx
+   */
+  async delError(ctx) {
+    const {
+      body
+    } = ctx.request
+    const result = await ErrorRecord.deleteMany({
+      _id: body.ids
+    })
+    if (result.ok === 1) {
+      ctx.body = {
+        code: 10000,
+        message: '错误消息删除成功',
+      };
+    } else {
+      ctx.body = {
+        code: 9000,
+        message: '错误消息删除失败',
+      };
+    }
   }
 }
 
