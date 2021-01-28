@@ -164,6 +164,9 @@ class PostController {
     if (body.tag) {
       options.tags = { $elemMatch: { name: body.tag } };
     }
+    if (body.keyword) {
+      options.title = { $regex: new RegExp(body.keyword) };
+    }
     const data = await Post.getList(options, page, limit, sort);
     const total = await Post.getListCount(options);
     const list = data.map((item) => {

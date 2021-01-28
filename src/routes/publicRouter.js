@@ -43,4 +43,7 @@ router.post('/add/link', indexController.addLink)
 // 添加广告
 router.post('/add/ads', indexController.addAds)
 
+// 获取搜索下拉列表
+router.get('/drop-down-list', indexController.getSearchDropDownList)
+
 export default router

@@ -86,6 +86,20 @@ class IndexController {
       message: '添加成功',
     };
   }
+
+  /**
+   * 获取搜索下拉列表
+   * @param {*}
+   */
+  async getSearchDropDownList(ctx) {
+    const body = ctx.query
+    const data = await Post.find({ title: { $regex: new RegExp(body.keyword) } }).limit(5).sort({ reads: -1 })
+    ctx.body = {
+      code: 10000,
+      data,
+      message: '获取成功',
+    };
+  }
 }
 
 export default new IndexController();
