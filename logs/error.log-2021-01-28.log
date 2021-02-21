@@ -1,0 +1,394 @@
+[2021-01-28T00:45:32.496] [ERROR] error - /public/drop-down-list?keyword=dsadsa GET 404
+    InternalServerError: 发出的请求针对的是不存在的记录，服务器没有进行操作。
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:30:7)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+    
+[2021-01-28T00:50:20.249] [ERROR] error - /public/drop-down-list?keyword=sas GET 404
+    InternalServerError: 发出的请求针对的是不存在的记录，服务器没有进行操作。
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:30:7)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+    
+[2021-01-28T00:55:55.144] [ERROR] error - /public/drop-down-list?keyword=y GET 200
+    TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'NativeTopology'
+    |     property 's' -> object with constructor 'Object'
+    |     property 'sessionPool' -> object with constructor 'ServerSessionPool'
+    --- property 'topology' closes the circle
+    at JSON.stringify (<anonymous>)
+    at Object.get length [as length] (/project/koa/front/console-koa-api/node_modules/koa/lib/response.js:213:35)
+    at assembleTokens (/project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:161:18)
+    at /project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:96:30
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:5)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+    
+[2021-01-28T01:03:49.548] [ERROR] error - /login/login POST 404
+    AbortError: Redis connection lost and command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:297:23)
+    at RedisClient.connection_gone (/project/koa/front/console-koa-api/node_modules/redis/index.js:602:14)
+    at RedisClient.on_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:345:10)
+    at Socket.<anonymous> (/project/koa/front/console-koa-api/node_modules/redis/index.js:222:14)
+    at Socket.emit (events.js:315:20)
+    at Socket.EventEmitter.emit (domain.js:486:12)
+    at emitErrorNT (internal/streams/destroy.js:106:8)
+    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+    
+[2021-01-28T01:03:49.549] [ERROR] error - /login/login POST 404
+    AbortError: Redis connection lost and command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:297:23)
+    at RedisClient.connection_gone (/project/koa/front/console-koa-api/node_modules/redis/index.js:602:14)
+    at RedisClient.on_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:345:10)
+    at Socket.<anonymous> (/project/koa/front/console-koa-api/node_modules/redis/index.js:222:14)
+    at Socket.emit (events.js:315:20)
+    at Socket.EventEmitter.emit (domain.js:486:12)
+    at emitErrorNT (internal/streams/destroy.js:106:8)
+    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+    
+[2021-01-28T01:03:49.549] [ERROR] error - /login/login POST 404
+    AbortError: Redis connection lost and command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:297:23)
+    at RedisClient.connection_gone (/project/koa/front/console-koa-api/node_modules/redis/index.js:602:14)
+    at RedisClient.on_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:345:10)
+    at Socket.<anonymous> (/project/koa/front/console-koa-api/node_modules/redis/index.js:222:14)
+    at Socket.emit (events.js:315:20)
+    at Socket.EventEmitter.emit (domain.js:486:12)
+    at emitErrorNT (internal/streams/destroy.js:106:8)
+    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+    
+[2021-01-28T01:03:49.666] [ERROR] error - /save_error_logger POST 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-body/index.js:148:14
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    
+[2021-01-28T01:03:49.674] [ERROR] error - /save_error_logger POST 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-body/index.js:148:14
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    
+[2021-01-28T01:03:49.678] [ERROR] error - /save_error_logger POST 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-body/index.js:148:14
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    
+[2021-01-28T17:03:22.055] [ERROR] error - /favicon.ico GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T17:10:06.851] [ERROR] error - /80f4bd6705ca9725ee83.hot-update.json GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T21:23:40.754] [ERROR] error - /5eef3c5f6a43136f7ccf.hot-update.json GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T21:46:35.945] [ERROR] error - /public/post/detail? GET 404
+    TypeError: Cannot read property 'toJSON' of null
+    at getPostDetail (/project/koa/front/console-koa-api/src/api/postController.js:195:35)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at runNextTicks (internal/process/task_queues.js:62:3)
+    at processImmediate (internal/timers.js:434:9)
+    at /project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:86:7
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:5)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+    
+[2021-01-28T21:46:37.780] [ERROR] error - /public/post/detail? GET 404
+    TypeError: Cannot read property 'toJSON' of null
+    at getPostDetail (/project/koa/front/console-koa-api/src/api/postController.js:195:35)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at runNextTicks (internal/process/task_queues.js:62:3)
+    at processImmediate (internal/timers.js:434:9)
+    at /project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:86:7
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:5)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+    
+[2021-01-28T21:46:47.773] [ERROR] error - /public/post/detail?id=6009876e7a4c5302bab35676 GET 404
+    TypeError: Cannot read property 'toJSON' of null
+    at getPostDetail (/project/koa/front/console-koa-api/src/api/postController.js:195:35)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at runNextTicks (internal/process/task_queues.js:62:3)
+    at processImmediate (internal/timers.js:434:9)
+    at /project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:86:7
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:5)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+    
+[2021-01-28T21:46:50.708] [ERROR] error - /public/post/detail?id=6009876e7a4c5302bab35676 GET 404
+    TypeError: Cannot read property 'toJSON' of null
+    at getPostDetail (/project/koa/front/console-koa-api/src/api/postController.js:195:35)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at runNextTicks (internal/process/task_queues.js:62:3)
+    at processImmediate (internal/timers.js:434:9)
+    at /project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:86:7
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:5)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+    
+[2021-01-28T21:54:17.863] [ERROR] error - /1277079e1a0b6f4372b6.hot-update.json GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:15.355] [ERROR] error - /images/20210115/7e4f8655-f171-4836-821a-f891ffd2447a.jpg/ GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:15.457] [ERROR] error - /favicon.ico GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:23.613] [ERROR] error - /images/20210115/7e4f8655-f171-4836-821a-f891ffd2447a.jpg/ GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:23.655] [ERROR] error - /favicon.ico GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:23.964] [ERROR] error - /images/20210115/7e4f8655-f171-4836-821a-f891ffd2447a.jpg/ GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:24.008] [ERROR] error - /favicon.ico GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:24.130] [ERROR] error - /images/20210115/7e4f8655-f171-4836-821a-f891ffd2447a.jpg/ GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:24.179] [ERROR] error - /favicon.ico GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:24.310] [ERROR] error - /images/20210115/7e4f8655-f171-4836-821a-f891ffd2447a.jpg/ GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:24.353] [ERROR] error - /favicon.ico GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:24.476] [ERROR] error - /images/20210115/7e4f8655-f171-4836-821a-f891ffd2447a.jpg/ GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
+[2021-01-28T22:17:24.517] [ERROR] error - /favicon.ico GET 404
+    UnauthorizedError: Authentication Error
+    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
+    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
+    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
+    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
+    
