@@ -17,4 +17,7 @@ router.post('/login', loginController.login)
 // 用户注册
 router.post('/reg', loginController.reg)
 
+// 移动端登录
+router.post('/mobile', loginController.mobileLogin)
+
 export default router

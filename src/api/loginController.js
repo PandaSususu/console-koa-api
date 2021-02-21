@@ -197,6 +197,63 @@ class LoginController {
       };
     }
   }
+  /**
+   * 获取验证码
+   * @param {*} ctx
+   */
+  async mobileLogin(ctx) {
+    const { body } = ctx.request;
+    // 校验用户账户
+    let userInfo = await User.findOne({ email: body.email });
+    if (!userInfo) {
+      ctx.body = {
+        code: 9000,
+        data: {},
+        message: '用户不存在',
+      };
+      return;
+    }
+    if (await bcrypt.compare(body.password, userInfo.password)) {
+      // 生成token
+      const token = jwt.sign({ _id: userInfo._id }, config.JWT_SECRET, {
+        expiresIn: '1d',
+      });
+      // 过滤用户信息敏感字段
+      let userJson = userInfo.toJSON();
+      const filter = ['password', 'created'];
+      filter.map((item) => {
+        delete userJson[item];
+      });
+      // 查询用户今天是否已签到
+      const lastSign = await SignRecord.findByUid(userInfo._id);
+      if (lastSign) {
+        if (
+          moment(lastSign.created).format('YYYY-MM-DD') ===
+          moment().format('YYYY-MM-DD')
+        ) {
+          userJson.isSign = true;
+        } else {
+          userJson.isSign = false;
+        }
+      } else {
+        userJson.isSign = false;
+      }
+      // 登录成功返回token
+      ctx.body = {
+        code: 10000,
+        data: {
+          token: token,
+          userJson,
+        },
+        message: '登陆成功',
+      };
+    } else {
+      ctx.body = {
+        code: 9001,
+        message: '用户名或密码错误',
+      };
+    }
+  }
 
   /**
    * 用户注册

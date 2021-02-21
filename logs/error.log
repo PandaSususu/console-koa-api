@@ -1,118 +1,85 @@
-[2021-01-28T00:45:32.496] [ERROR] error - /public/drop-down-list?keyword=dsadsa GET 404
-    InternalServerError: 发出的请求针对的是不存在的记录，服务器没有进行操作。
-    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
-    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:30:7)
-    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
-    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
-    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+[2021-01-29T02:37:34.881] [ERROR] error - /login/login POST 404
+    Error: node_redis: The GET command contains a invalid argument type of "undefined".
+Only strings, dates and buffers are accepted. Please update your code to use valid argument types.
+    at RedisClient.internal_send_command (/project/koa/front/console-koa-api/node_modules/redis/index.js:849:37)
+    at RedisClient.get (/project/koa/front/console-koa-api/node_modules/redis/lib/commands.js:46:25)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+    at RedisClient.getAsync (internal/util.js:296:12)
+    at getValue (/project/koa/front/console-koa-api/src/config/redisConfig.js:52:10)
+    at checkCode (/project/koa/front/console-koa-api/src/common/utils.js:19:27)
+    at login (/project/koa/front/console-koa-api/src/api/loginController.js:141:26)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:372:16
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-compose/index.js:34:12
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:377:31)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at allowedMethods (/project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:433:12)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
     
-[2021-01-28T00:50:20.249] [ERROR] error - /public/drop-down-list?keyword=sas GET 404
-    InternalServerError: 发出的请求针对的是不存在的记录，服务器没有进行操作。
-    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
-    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:30:7)
-    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
-    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
-    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
+[2021-01-29T04:29:20.228] [ERROR] error - /post/add POST 404
+    Error: node_redis: The GET command contains a invalid argument type of "undefined".
+Only strings, dates and buffers are accepted. Please update your code to use valid argument types.
+    at RedisClient.internal_send_command (/project/koa/front/console-koa-api/node_modules/redis/index.js:849:37)
+    at RedisClient.get (/project/koa/front/console-koa-api/node_modules/redis/lib/commands.js:46:25)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+    at RedisClient.getAsync (internal/util.js:296:12)
+    at getValue (/project/koa/front/console-koa-api/src/config/redisConfig.js:52:10)
+    at checkCode (/project/koa/front/console-koa-api/src/common/utils.js:19:27)
+    at addPost (/project/koa/front/console-koa-api/src/api/postController.js:14:26)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:372:16
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-compose/index.js:34:12
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:377:31)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at allowedMethods (/project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:433:12)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
     
-[2021-01-28T00:55:55.144] [ERROR] error - /public/drop-down-list?keyword=y GET 200
-    TypeError: Converting circular structure to JSON
-    --> starting at object with constructor 'NativeTopology'
-    |     property 's' -> object with constructor 'Object'
-    |     property 'sessionPool' -> object with constructor 'ServerSessionPool'
-    --- property 'topology' closes the circle
-    at JSON.stringify (<anonymous>)
-    at Object.get length [as length] (/project/koa/front/console-koa-api/node_modules/koa/lib/response.js:213:35)
-    at assembleTokens (/project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:161:18)
-    at /project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:96:30
+[2021-01-29T04:29:28.779] [ERROR] error - /post/add POST 404
+    Error: node_redis: The GET command contains a invalid argument type of "undefined".
+Only strings, dates and buffers are accepted. Please update your code to use valid argument types.
+    at RedisClient.internal_send_command (/project/koa/front/console-koa-api/node_modules/redis/index.js:849:37)
+    at RedisClient.get (/project/koa/front/console-koa-api/node_modules/redis/lib/commands.js:46:25)
+    at internal/util.js:297:30
+    at new Promise (<anonymous>)
+    at RedisClient.getAsync (internal/util.js:296:12)
+    at getValue (/project/koa/front/console-koa-api/src/config/redisConfig.js:52:10)
+    at checkCode (/project/koa/front/console-koa-api/src/common/utils.js:19:27)
+    at addPost (/project/koa/front/console-koa-api/src/api/postController.js:14:26)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:372:16
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at /project/koa/front/console-koa-api/node_modules/koa-compose/index.js:34:12
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:377:31)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    at allowedMethods (/project/koa/front/console-koa-api/node_modules/koa-router/lib/router.js:433:12)
+    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
+    
+[2021-01-29T05:48:38.103] [ERROR] error - /login/login POST 404
+    AbortError: Redis connection lost and command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:297:23)
+    at RedisClient.connection_gone (/project/koa/front/console-koa-api/node_modules/redis/index.js:602:14)
+    at RedisClient.on_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:345:10)
+    at Socket.<anonymous> (/project/koa/front/console-koa-api/node_modules/redis/index.js:222:14)
+    at Socket.emit (events.js:315:20)
+    at Socket.EventEmitter.emit (domain.js:486:12)
+    at emitErrorNT (internal/streams/destroy.js:106:8)
+    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+    
+[2021-01-29T06:37:41.897] [ERROR] error - /public/post/detail?tid=6001677c1c051e048503622a GET 404
+    TypeError: Cannot read property 'toJSON' of null
+    at getPostDetail (/project/koa/front/console-koa-api/src/api/postController.js:239:35)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at runNextTicks (internal/process/task_queues.js:62:3)
+    at processImmediate (internal/timers.js:434:9)
+    at /project/koa/front/console-koa-api/node_modules/koa-log4/koa-logger.js:86:7
     at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:5)
     at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:9)
     at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:48)
     at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:9)
-    
-[2021-01-28T01:03:49.548] [ERROR] error - /login/login POST 404
-    AbortError: Redis connection lost and command aborted. It might have been processed.
-    at RedisClient.flush_and_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:297:23)
-    at RedisClient.connection_gone (/project/koa/front/console-koa-api/node_modules/redis/index.js:602:14)
-    at RedisClient.on_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:345:10)
-    at Socket.<anonymous> (/project/koa/front/console-koa-api/node_modules/redis/index.js:222:14)
-    at Socket.emit (events.js:315:20)
-    at Socket.EventEmitter.emit (domain.js:486:12)
-    at emitErrorNT (internal/streams/destroy.js:106:8)
-    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-    
-[2021-01-28T01:03:49.549] [ERROR] error - /login/login POST 404
-    AbortError: Redis connection lost and command aborted. It might have been processed.
-    at RedisClient.flush_and_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:297:23)
-    at RedisClient.connection_gone (/project/koa/front/console-koa-api/node_modules/redis/index.js:602:14)
-    at RedisClient.on_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:345:10)
-    at Socket.<anonymous> (/project/koa/front/console-koa-api/node_modules/redis/index.js:222:14)
-    at Socket.emit (events.js:315:20)
-    at Socket.EventEmitter.emit (domain.js:486:12)
-    at emitErrorNT (internal/streams/destroy.js:106:8)
-    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-    
-[2021-01-28T01:03:49.549] [ERROR] error - /login/login POST 404
-    AbortError: Redis connection lost and command aborted. It might have been processed.
-    at RedisClient.flush_and_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:297:23)
-    at RedisClient.connection_gone (/project/koa/front/console-koa-api/node_modules/redis/index.js:602:14)
-    at RedisClient.on_error (/project/koa/front/console-koa-api/node_modules/redis/index.js:345:10)
-    at Socket.<anonymous> (/project/koa/front/console-koa-api/node_modules/redis/index.js:222:14)
-    at Socket.emit (events.js:315:20)
-    at Socket.EventEmitter.emit (domain.js:486:12)
-    at emitErrorNT (internal/streams/destroy.js:106:8)
-    at emitErrorCloseNT (internal/streams/destroy.js:74:3)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-    
-[2021-01-28T01:03:49.666] [ERROR] error - /save_error_logger POST 404
-    UnauthorizedError: Authentication Error
-    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
-    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
-    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
-    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at /project/koa/front/console-koa-api/node_modules/koa-body/index.js:148:14
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)
-    
-[2021-01-28T01:03:49.674] [ERROR] error - /save_error_logger POST 404
-    UnauthorizedError: Authentication Error
-    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
-    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
-    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
-    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at /project/koa/front/console-koa-api/node_modules/koa-body/index.js:148:14
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)
-    
-[2021-01-28T01:03:49.678] [ERROR] error - /save_error_logger POST 404
-    UnauthorizedError: Authentication Error
-    at Object.throw (/project/koa/front/console-koa-api/node_modules/koa/lib/context.js:97:11)
-    at jwt (/project/koa/front/console-koa-api/node_modules/koa-jwt/lib/index.js:23:22)
-    at /project/koa/front/console-koa-api/node_modules/koa-unless/index.js:29:12
-    at next (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at _default (/project/koa/front/console-koa-api/src/common/errorHandle.js:10:11)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at cors (/project/koa/front/console-koa-api/node_modules/koa2-cors/dist/index.js:91:15)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at bodyParser (/project/koa/front/console-koa-api/node_modules/koa-bodyparser/index.js:82:54)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at serve (/project/koa/front/console-koa-api/node_modules/koa-static/index.js:53:15)
-    at dispatch (/project/koa/front/console-koa-api/node_modules/koa-compose/index.js:42:32)
-    at /project/koa/front/console-koa-api/node_modules/koa-body/index.js:148:14
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)
     

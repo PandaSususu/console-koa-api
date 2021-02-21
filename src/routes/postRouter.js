@@ -9,6 +9,9 @@ router.prefix('/post')
 // 发表新帖
 router.post('/add', postController.addPost)
 
+// 移动端发表新帖
+router.post('/add-mobile', postController.mobileAddPost)
+
 // 用户更新帖子
 router.post('/update', postController.updatePost)
 

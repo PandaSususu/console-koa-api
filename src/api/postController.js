@@ -58,6 +58,50 @@ class PostController {
     }
   }
 
+   /**
+   * 发表新帖
+   * @param {*}
+   */
+  async mobileAddPost(ctx) {
+    const { body } = ctx.request;
+    const payload = await getJWTPayload(ctx.header.authorization);
+      const userInfo = await User.findByUid(payload._id);
+      // 判断用户积分是否大于发帖所需积分
+      if (userInfo.favs >= body.fav) {
+        const result = await User.updateOne(
+          {
+            _id: payload._id,
+          },
+          {
+            $inc: { favs: -body.fav },
+          }
+        );
+        if (result.ok === 1) {
+          body.uid = payload._id;
+          const newPost = new Post(body);
+          const post = await newPost.save();
+          ctx.body = {
+            code: 10000,
+            data: post._id,
+            message: '发帖成功',
+          };
+        } else {
+          ctx.body = {
+            code: 9002,
+            message: '发表失败，请重试',
+          };
+        }
+      } else {
+        ctx.body = {
+          code: 9001,
+          data: {
+            favs: userInfo.favs,
+          },
+          message: '积分不足',
+        };
+      }
+  }
+
   /**
    * 更新帖子
    * @param {*}
